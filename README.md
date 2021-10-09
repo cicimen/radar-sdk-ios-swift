@@ -1,2 +1,2 @@
-# radar-sdk-ios-swift
+# Radar-sdk-ios-swift
 iOS swift SDK for Radar
