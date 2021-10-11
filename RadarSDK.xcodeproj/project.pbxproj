@@ -12,6 +12,10 @@
 		8878715627148338007666E1 /* RadarLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878715527148338007666E1 /* RadarLogLevel.swift */; };
 		8878715827148373007666E1 /* RadarRouteMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878715727148373007666E1 /* RadarRouteMode.swift */; };
 		8878715B271484C7007666E1 /* RadarRouteUnits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878715A271484C7007666E1 /* RadarRouteUnits.swift */; };
+		8878715D271486FF007666E1 /* RadarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878715C271486FF007666E1 /* RadarDelegate.swift */; };
+		8878715F27149A98007666E1 /* RadarUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878715E27149A98007666E1 /* RadarUser.swift */; };
+		8878716127149AB2007666E1 /* RadarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878716027149AB2007666E1 /* RadarEvent.swift */; };
+		8878716327149EE8007666E1 /* RadarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878716227149EE8007666E1 /* RadarUtils.swift */; };
 		88E22B7027120535003997C1 /* RadarSDK.docc in Sources */ = {isa = PBXBuildFile; fileRef = 88E22B6F27120535003997C1 /* RadarSDK.docc */; };
 		88E22B7627120535003997C1 /* RadarSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E22B6B27120535003997C1 /* RadarSDK.framework */; };
 		88E22B7B27120535003997C1 /* RadarSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E22B7A27120535003997C1 /* RadarSDKTests.swift */; };
@@ -35,6 +39,10 @@
 		8878715527148338007666E1 /* RadarLogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarLogLevel.swift; sourceTree = "<group>"; };
 		8878715727148373007666E1 /* RadarRouteMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarRouteMode.swift; sourceTree = "<group>"; };
 		8878715A271484C7007666E1 /* RadarRouteUnits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarRouteUnits.swift; sourceTree = "<group>"; };
+		8878715C271486FF007666E1 /* RadarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarDelegate.swift; sourceTree = "<group>"; };
+		8878715E27149A98007666E1 /* RadarUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarUser.swift; sourceTree = "<group>"; };
+		8878716027149AB2007666E1 /* RadarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarEvent.swift; sourceTree = "<group>"; };
+		8878716227149EE8007666E1 /* RadarUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarUtils.swift; sourceTree = "<group>"; };
 		88E22B6B27120535003997C1 /* RadarSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RadarSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E22B6E27120535003997C1 /* RadarSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RadarSDK.h; sourceTree = "<group>"; };
 		88E22B6F27120535003997C1 /* RadarSDK.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = RadarSDK.docc; sourceTree = "<group>"; };
@@ -65,11 +73,14 @@
 		8878714A27147133007666E1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8878716027149AB2007666E1 /* RadarEvent.swift */,
 				8878715527148338007666E1 /* RadarLogLevel.swift */,
+				8878715C271486FF007666E1 /* RadarDelegate.swift */,
 				8878715227148208007666E1 /* RadarLocationSource.swift */,
 				8878715727148373007666E1 /* RadarRouteMode.swift */,
 				8878715A271484C7007666E1 /* RadarRouteUnits.swift */,
 				8878714B2714717E007666E1 /* RadarStatus.swift */,
+				8878715E27149A98007666E1 /* RadarUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -77,6 +88,7 @@
 		8878714E27147371007666E1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				8878716227149EE8007666E1 /* RadarUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -230,11 +242,15 @@
 			files = (
 				8878715327148208007666E1 /* RadarLocationSource.swift in Sources */,
 				8878715627148338007666E1 /* RadarLogLevel.swift in Sources */,
+				8878716327149EE8007666E1 /* RadarUtils.swift in Sources */,
 				88EFA96927120884006DFD62 /* Radar.swift in Sources */,
+				8878715D271486FF007666E1 /* RadarDelegate.swift in Sources */,
+				8878715F27149A98007666E1 /* RadarUser.swift in Sources */,
 				8878715827148373007666E1 /* RadarRouteMode.swift in Sources */,
 				88E22B7027120535003997C1 /* RadarSDK.docc in Sources */,
 				8878715B271484C7007666E1 /* RadarRouteUnits.swift in Sources */,
 				8878714C2714717E007666E1 /* RadarStatus.swift in Sources */,
+				8878716127149AB2007666E1 /* RadarEvent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,7 +325,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -367,7 +383,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -392,6 +408,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -420,6 +437,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
