@@ -116,8 +116,8 @@
 				887871692714BD34007666E1 /* RadarTrackingOptions.swift */,
 				880A56742715BB83006A8A34 /* RadarTripOptions.swift */,
 				8878715E27149A98007666E1 /* RadarUser.swift */,
-				880A56822715DBC6006A8A34 /* RadarUserInsightsState.swift */,
 				880A56842715DE10006A8A34 /* RadarUserInsightsLocation.swift */,
+				880A56822715DBC6006A8A34 /* RadarUserInsightsState.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
