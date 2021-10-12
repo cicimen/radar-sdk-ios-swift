@@ -10,6 +10,7 @@
 		880A56752715BB83006A8A34 /* RadarTripOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A56742715BB83006A8A34 /* RadarTripOptions.swift */; };
 		880A56772715C1C1006A8A34 /* RadarDelegateHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A56762715C1C1006A8A34 /* RadarDelegateHolder.swift */; };
 		880A56792715C73D006A8A34 /* RadarPermissionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A56782715C73D006A8A34 /* RadarPermissionsHelper.swift */; };
+		880A567B2715C7FB006A8A34 /* RadarCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A567A2715C7FB006A8A34 /* RadarCoordinate.swift */; };
 		8878714C2714717E007666E1 /* RadarStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878714B2714717E007666E1 /* RadarStatus.swift */; };
 		8878715327148208007666E1 /* RadarLocationSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878715227148208007666E1 /* RadarLocationSource.swift */; };
 		8878715627148338007666E1 /* RadarLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878715527148338007666E1 /* RadarLogLevel.swift */; };
@@ -43,6 +44,7 @@
 		880A56742715BB83006A8A34 /* RadarTripOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarTripOptions.swift; sourceTree = "<group>"; };
 		880A56762715C1C1006A8A34 /* RadarDelegateHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarDelegateHolder.swift; sourceTree = "<group>"; };
 		880A56782715C73D006A8A34 /* RadarPermissionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarPermissionsHelper.swift; sourceTree = "<group>"; };
+		880A567A2715C7FB006A8A34 /* RadarCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarCoordinate.swift; sourceTree = "<group>"; };
 		8878714B2714717E007666E1 /* RadarStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarStatus.swift; sourceTree = "<group>"; };
 		8878715227148208007666E1 /* RadarLocationSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarLocationSource.swift; sourceTree = "<group>"; };
 		8878715527148338007666E1 /* RadarLogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarLogLevel.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				887871692714BD34007666E1 /* RadarTrackingOptions.swift */,
 				880A56742715BB83006A8A34 /* RadarTripOptions.swift */,
 				880A56762715C1C1006A8A34 /* RadarDelegateHolder.swift */,
+				880A567A2715C7FB006A8A34 /* RadarCoordinate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				8878715627148338007666E1 /* RadarLogLevel.swift in Sources */,
 				887871662714B749007666E1 /* RadarLogger.swift in Sources */,
 				8878716327149EE8007666E1 /* RadarUtils.swift in Sources */,
+				880A567B2715C7FB006A8A34 /* RadarCoordinate.swift in Sources */,
 				88EFA96927120884006DFD62 /* Radar.swift in Sources */,
 				8878715D271486FF007666E1 /* RadarDelegate.swift in Sources */,
 				880A56772715C1C1006A8A34 /* RadarDelegateHolder.swift in Sources */,
