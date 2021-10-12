@@ -13,6 +13,7 @@ import AppTrackingTransparency
 
 class RadarUtils {
     
+    //TODO: CHECK AGAIN
     static func deviceModel() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)

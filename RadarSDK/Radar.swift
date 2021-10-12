@@ -13,17 +13,17 @@ public class Radar {
     //private weak var delegate: RadarDelegate?
     
     /*
-    static let sharedInstanceVar: Radar = {
-        var sharedInstance = Radar.init()
-        return sharedInstance
-    }()
-
-    class func sharedInstance() -> Any? {
-        // `dispatch_once()` call was converted to a static variable initializer
-        return sharedInstanceVar
-    }
+     static let sharedInstanceVar: Radar = {
+     var sharedInstance = Radar.init()
+     return sharedInstance
+     }()
+     
+     class func sharedInstance() -> Any? {
+     // `dispatch_once()` call was converted to a static variable initializer
+     return sharedInstanceVar
+     }
      */
-
+    
     class func initialize(withPublishableKey publishableKey: String?) {
         
         /*
@@ -38,6 +38,31 @@ public class Radar {
          RadarLocationManager.sharedInstance().updateTracking()
          RadarAPIClient.sharedInstance().getConfig()
          */
+    }
+    
+    
+    
+    /// Returns a display string for a travel mode value.
+    ///
+    /// - Parameters:
+    ///     - mode: A travel mode value.
+    ///
+    /// - Returns:A display string for the travel mode value.
+    static func string(mode: RadarRouteMode) -> String? {
+        switch mode {
+        case .foot:
+            return "foot"
+        case .bike:
+            return "bike"
+        case .car:
+            return "car"
+        case .truck:
+            return "truck"
+        case .motorbike:
+            return "motorbike"
+        default:
+            return nil
+        }
     }
     
 }
