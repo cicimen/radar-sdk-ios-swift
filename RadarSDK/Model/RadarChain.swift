@@ -9,17 +9,17 @@ import Foundation
 
 /// Represents the chain of a place.
 ///
-/// See [Places](https://radar.io/documentation/places) .
+/// See [Places](https://radar.io/documentation/places).
 class RadarChain {
     
     /// The unique ID of the chain. For a full list of chains, see [Chains](https://radar.io/documentation/places/chains).
     ///
-    /// See [Chains](https://radar.io/documentation/places/chains) .
+    /// See [Chains](https://radar.io/documentation/places/chains).
     private(set) var slug = ""
     
     /// The name of the chain. For a full list of chains, see [Chains](https://radar.io/documentation/places/chains).
     ///
-    /// See [Chains](https://radar.io/documentation/places/chains) .
+    /// See [Chains](https://radar.io/documentation/places/chains).
     private(set) var name = ""
     
     /// The external ID of the chain.
