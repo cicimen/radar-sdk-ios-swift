@@ -1,5 +1,5 @@
 //
-//  RadarRouteDistance.swift
+//  RadarRouteDuration.swift
 //  RadarSDK
 //
 //  Created by Egemen Gulkilik on 13.10.2021.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-/// Represents the distance of a route.
-class RadarRouteDistance {
+/// Represents the duration of a route.
+class RadarRouteDuration {
     
-    /// The distance in feet (for imperial units) or meters (for metric units).
+    /// The duration in minutes.
     private(set) var value = 0.0
     
-    /// A display string for the distance.
+    /// A display string for the duration.
     private(set) var text = ""
     
     init(value: Double, text: String) {
@@ -38,5 +38,4 @@ class RadarRouteDistance {
         dict["text"] = text
         return dict
     }
-    
 }
