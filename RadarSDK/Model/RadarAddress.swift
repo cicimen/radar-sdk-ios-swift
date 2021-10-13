@@ -135,6 +135,7 @@ class RadarAddress {
                 confidence = .fallback
             }
         }
+        
         self.init(coordinate: coordinate, formattedAddress: formattedAddress, country: country, countryCode: countryCode, countryFlag: countryFlag, dma: dma, dmaCode: dmaCode, state: state, stateCode: stateCode, postalCode: postalCode, city: city, borough: borough, county: county, neighborhood: neighborhood, number: number, addressLabel: addressLabel, placeLabel: placeLabel, confidence: confidence)
         
     }
@@ -151,7 +152,7 @@ class RadarAddress {
         return mutableAddresses
     }
     
-    class func array(forAddresses addresses: [RadarAddress]?) -> [[AnyHashable : Any]]? {
+    static func array(forAddresses addresses: [RadarAddress]?) -> [[AnyHashable : Any]]? {
         if addresses == nil {
             return nil
         }
@@ -163,7 +164,7 @@ class RadarAddress {
         return arr
     }
     
-    class func string(for confidence: RadarAddressConfidence) -> String {
+    static func string(for confidence: RadarAddressConfidence) -> String {
         switch confidence {
         case .exact:
             return "exact"

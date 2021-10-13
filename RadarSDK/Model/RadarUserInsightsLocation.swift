@@ -108,7 +108,7 @@ class RadarUserInsightsLocation {
             }
         }
         
-        if let updatedAtObj = dict["updatedAt"], let userInsightsLocationUpdatedAtStr = updatedAtObj as? String {
+        if let userInsightsLocationUpdatedAtStr = dict["updatedAt"] as? String {
             let dateFormatter = DateFormatter()
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale
             dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC") as TimeZone?
