@@ -66,7 +66,7 @@ class RadarTripOptions: NSObject {
         dict[kMetadata] = metadata
         dict[kDestinationGeofenceTag] = destinationGeofenceTag
         dict[kDestinationGeofenceExternalId] = destinationGeofenceExternalId
-        dict[kMode] = Radar.string(mode: mode)
+        dict[kMode] = Radar.stringForMode(mode)
         return dict
     }
 }

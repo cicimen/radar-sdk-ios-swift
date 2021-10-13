@@ -10,6 +10,7 @@ import CoreLocation
 
 public class Radar {
     
+    
     //private weak var delegate: RadarDelegate?
     
     /*
@@ -48,7 +49,7 @@ public class Radar {
     ///     - mode: A travel mode value.
     ///
     /// - Returns:A display string for the travel mode value.
-    static func string(mode: RadarRouteMode) -> String? {
+    static func stringForMode(_ mode: RadarRouteMode) -> String? {
         switch mode {
         case .foot:
             return "foot"
@@ -62,6 +63,31 @@ public class Radar {
             return "motorbike"
         default:
             return nil
+        }
+    }
+    
+    /// Returns a display string for a trip status value.
+    ///
+    /// - Parameters:
+    ///     - status: A trip status value.
+    ///
+    /// - Returns:A display string for the trip status value.
+    static func stringForTripStatus(_ status: RadarTripStatus) -> String {
+        switch status {
+        case .started:
+            return "started"
+        case .approaching:
+            return "approaching"
+        case .arrived:
+            return "arrived"
+        case .expired:
+            return "expired"
+        case .completed:
+            return "completed"
+        case .canceled:
+            return "canceled"
+        default:
+            return "unknown"
         }
     }
     
