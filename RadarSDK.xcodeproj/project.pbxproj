@@ -25,6 +25,7 @@
 		880A5693271626ED006A8A34 /* RadarGeofence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A5692271626ED006A8A34 /* RadarGeofence.swift */; };
 		880A56952716310F006A8A34 /* RadarSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A56942716310F006A8A34 /* RadarSegment.swift */; };
 		881D4193271766C1000B6385 /* RadarRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D4192271766C1000B6385 /* RadarRoute.swift */; };
+		88426FBB271875F7006C3C5E /* RadarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88426FBA271875F7006C3C5E /* RadarState.swift */; };
 		886B6945271852F100CFF12F /* RadarRouteMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886B6944271852F100CFF12F /* RadarRouteMatrix.swift */; };
 		8878714C2714717E007666E1 /* RadarStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878714B2714717E007666E1 /* RadarStatus.swift */; };
 		8878715327148208007666E1 /* RadarLocationSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878715227148208007666E1 /* RadarLocationSource.swift */; };
@@ -80,6 +81,7 @@
 		880A5692271626ED006A8A34 /* RadarGeofence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarGeofence.swift; sourceTree = "<group>"; };
 		880A56942716310F006A8A34 /* RadarSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarSegment.swift; sourceTree = "<group>"; };
 		881D4192271766C1000B6385 /* RadarRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarRoute.swift; sourceTree = "<group>"; };
+		88426FBA271875F7006C3C5E /* RadarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarState.swift; sourceTree = "<group>"; };
 		886B6944271852F100CFF12F /* RadarRouteMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarRouteMatrix.swift; sourceTree = "<group>"; };
 		8878714B2714717E007666E1 /* RadarStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarStatus.swift; sourceTree = "<group>"; };
 		8878715227148208007666E1 /* RadarLocationSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarLocationSource.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				8878716227149EE8007666E1 /* RadarUtils.swift */,
 				887871652714B749007666E1 /* RadarLogger.swift */,
 				880A56782715C73D006A8A34 /* RadarPermissionsHelper.swift */,
+				88426FBA271875F7006C3C5E /* RadarState.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				880A56832715DBC6006A8A34 /* RadarUserInsightsState.swift in Sources */,
 				880A5693271626ED006A8A34 /* RadarGeofence.swift in Sources */,
 				8878716A2714BD34007666E1 /* RadarTrackingOptions.swift in Sources */,
+				88426FBB271875F7006C3C5E /* RadarState.swift in Sources */,
 				880A56852715DE10006A8A34 /* RadarUserInsightsLocation.swift in Sources */,
 				88A2D8FE2716A98700981CA8 /* RadarPlace.swift in Sources */,
 				880A56912716258B006A8A34 /* RadarContext.swift in Sources */,
