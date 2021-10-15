@@ -33,16 +33,17 @@ class RadarSettings {
         UserDefaults.standard.set(publishableKey, forKey: kPublishableKey)
     }
     
-    static func installId() -> String? {
-        var installId = UserDefaults.standard.string(forKey: kInstallId)
-        if installId == nil {
-            installId = UUID().uuidString
+    static func installId() -> String {
+        if let installId = UserDefaults.standard.string(forKey: kInstallId) {
+            return installId
+        } else {
+            let installId = UUID().uuidString
             UserDefaults.standard.set(installId, forKey: kInstallId)
+            return installId
         }
-        return installId
     }
     
-    static func sessionId() -> String? {
+    static func sessionId() -> String {
         return String(format: "%.f", UserDefaults.standard.double(forKey: kSessionId))
     }
     
@@ -51,14 +52,14 @@ class RadarSettings {
         let sessionIdSeconds = UserDefaults.standard.double(forKey: kSessionId)
         if timestampSeconds - sessionIdSeconds > 300 {
             UserDefaults.standard.set(timestampSeconds, forKey: kSessionId)
-            RadarLogger.sharedInstance.log(level: .debug, message: "New session | sessionId = \(RadarSettings.sessionId() ?? "")")
+            RadarLogger.sharedInstance.log(level: .debug, message: "New session | sessionId = \(RadarSettings.sessionId())")
             return true
         }
         return false
     }
     
     static func _id() -> String? {
-        return UserDefaults.standard.string(forKey: kId)
+        return UserDefaults.standard.string(forKey: kId) //TODO: CONVERT _id TO id
     }
     
     static func setId(_ _id: String?) {
@@ -109,11 +110,11 @@ class RadarSettings {
         UserDefaults.standard.set(tracking, forKey: kTracking)
     }
     
-    static func trackingOptions() -> RadarTrackingOptions? {
+    static func trackingOptions() -> RadarTrackingOptions {
         if let optionsDict = UserDefaults.standard.dictionary(forKey: kTrackingOptions) {
             return RadarTrackingOptions(fromDictionary: optionsDict)
         } else {
-            return nil
+            return RadarTrackingOptions()
         }
     }
     
@@ -150,9 +151,8 @@ class RadarSettings {
         UserDefaults.standard.set(level.rawValue, forKey: kLogLevel)
     }
     
-    static func host() -> String? {
-        let host = UserDefaults.standard.string(forKey: kHost)
-        return host ?? kDefaultHost
+    static func host() -> String {
+        return UserDefaults.standard.string(forKey: kHost) ?? kDefaultHost
     }
     
 }

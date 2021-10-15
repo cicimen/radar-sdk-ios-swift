@@ -43,6 +43,40 @@ public class Radar {
     
     
     
+    
+    /// Returns a display string for a location source value.
+    ///
+    /// - Parameters:
+    ///     - source: A location source value.
+    ///
+    /// - Returns:A display string for the location source value.
+    static func stringForLocationSource(_ source: RadarLocationSource) -> String {
+        switch source {
+        case .foregroundLocation:
+            return "FOREGROUND_LOCATION"
+        case .backgroundLocation:
+            return "BACKGROUND_LOCATION"
+        case .manualLocation:
+            return "MANUAL_LOCATION"
+        case .visitArrival:
+            return "VISIT_ARRIVAL"
+        case .visitDeparture:
+            return "VISIT_DEPARTURE"
+        case .geofenceEnter:
+            return "GEOFENCE_ENTER"
+        case .geofenceExit:
+            return "GEOFENCE_EXIT"
+        case .mockLocation:
+            return "MOCK_LOCATION"
+        case .beaconEnter:
+            return "BEACON_ENTER"
+        case .beaconExit:
+            return "BEACON_EXIT"
+        case .unknown:
+            return "UNKNOWN"
+        }
+    }
+    
     /// Returns a display string for a travel mode value.
     ///
     /// - Parameters:

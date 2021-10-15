@@ -91,7 +91,7 @@ class RadarUtils {
         }
     }
     
-    static func locationAccuracyAuthorization() -> String? {
+    static func locationAccuracyAuthorization() -> String {
         if #available(iOS 14.0, *) {
             let accuracyAuthorization = CLLocationManager().accuracyAuthorization
             switch accuracyAuthorization {

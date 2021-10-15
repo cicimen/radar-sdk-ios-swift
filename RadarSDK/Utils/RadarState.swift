@@ -87,9 +87,11 @@ class RadarState {
         }
     }
     
-    static func setLastFailedStoppedLocation(_ lastFailedStoppedLocation: CLLocation) {
-        if RadarUtils.validLocation(lastFailedStoppedLocation) {
+    static func setLastFailedStoppedLocation(_ lastFailedStoppedLocation: CLLocation?) {
+        if let lastFailedStoppedLocation = lastFailedStoppedLocation, RadarUtils.validLocation(lastFailedStoppedLocation) {
             UserDefaults.standard.set(RadarUtils.dictionary(for: lastFailedStoppedLocation), forKey: kLastFailedStoppedLocation)
+        } else {
+            UserDefaults.standard.set(nil, forKey: kLastFailedStoppedLocation)
         }
     }
     

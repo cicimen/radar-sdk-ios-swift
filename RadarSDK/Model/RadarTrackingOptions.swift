@@ -72,7 +72,7 @@ enum RadarTrackingOptionsSyncLocations : Int {
 /// An options class used to configure background tracking.
 ///
 /// See the [Docs](https://radar.io/documentation/sdk/ios) .
-class RadarTrackingOptions: NSObject {
+class RadarTrackingOptions {
     
     /// Determines the desired location update interval in seconds when stopped. Use 0 to shut down when stopped.
     /// - Warning: Note that location updates may be delayed significantly by Low Power Mode, or if the device has connectivity issues, low battery, or wi-fi disabled.
@@ -267,10 +267,6 @@ class RadarTrackingOptions: NSObject {
     }
     
     func isEqual(_ options: RadarTrackingOptions) -> Bool {
-        if self == options {
-            return true
-        }
-        
         return desiredStoppedUpdateInterval == options.desiredStoppedUpdateInterval && desiredMovingUpdateInterval == options.desiredMovingUpdateInterval && desiredSyncInterval == options.desiredSyncInterval && desiredAccuracy == options.desiredAccuracy && stopDuration == options.stopDuration && stopDistance == options.stopDistance && (startTrackingAfter == nil ? options.startTrackingAfter == nil : (startTrackingAfter == options.startTrackingAfter)) && (stopTrackingAfter == nil ? options.stopTrackingAfter == nil : (stopTrackingAfter == options.stopTrackingAfter)) && syncLocations == options.syncLocations && replay == options.replay && showBlueBar == options.showBlueBar && useStoppedGeofence == options.useStoppedGeofence && stoppedGeofenceRadius == options.stoppedGeofenceRadius && useMovingGeofence == options.useMovingGeofence && movingGeofenceRadius == options.movingGeofenceRadius && syncGeofences == options.syncGeofences && useVisits == options.useVisits && useSignificantLocationChanges == options.useSignificantLocationChanges && beacons == options.beacons
     }
 }
