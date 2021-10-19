@@ -549,28 +549,22 @@ extension RadarLocationManager: CLLocationManagerDelegate {
             return
         }
         if region.identifier.hasPrefix(kSyncBeaconIdentifierPrefix) {
-            
-            //TODO: BURADAYIM
-            let identifier = region.identifier.inde(kSyncBeaconIdentifierPrefix.endIndex)
-
-            
-            let identifier = region.identifier.substring(from: kSyncBeaconIdentifierPrefix.last)
-            let alreadyInside = nearbyBeaconIdentifers.contains(identifier)
-            if alreadyInside {
+            let identifier = String(region.identifier[kSyncBeaconIdentifierPrefix.endIndex..<region.identifier.endIndex])
+            if nearbyBeaconIdentifers.contains(identifier) {
                 RadarLogger.sharedInstance.log(level: .debug, message: "Already inside beacon region | identifier = \(identifier)")
             } else {
                 RadarLogger.sharedInstance.log(level: .debug, message: "Entered beacon region | identifier = \(identifier)")
-                nearbyBeaconIdentifers.append(identifier)
+                nearbyBeaconIdentifers.insert(identifier)
                 var location: CLLocation?
-                if RadarUtils.validLocation(manager.location) {
-                    location = manager.location
+                if let managerLocation = manager.location, RadarUtils.validLocation(managerLocation) {
+                    location = managerLocation
                 } else {
                     location = RadarState.lastLocation()
                 }
-                handle(location, source: RadarLocationSourceBeaconEnter)
+                handleLocation(location, source: .beaconEnter)
             }
         } else if manager.location != nil {
-            handle(manager.location, source: RadarLocationSourceGeofenceEnter)
+            handleLocation(manager.location, source: .geofenceEnter)
         }
     }
     
@@ -579,23 +573,22 @@ extension RadarLocationManager: CLLocationManagerDelegate {
             return
         }
         if region.identifier.hasPrefix(kSyncBeaconIdentifierPrefix) {
-            let identifier = (region.identifier as NSString).substring(from: kSyncBeaconIdentifierPrefix.length)
-            let alreadyOutside = !nearbyBeaconIdentifers.contains(identifier)
-            if alreadyOutside {
-                RadarLogger.sharedInstance().log(withLevel: RadarLogLevelDebug, message: "Already outside beacon region | identifier = \(identifier)")
+            let identifier = String(region.identifier[kSyncBeaconIdentifierPrefix.endIndex..<region.identifier.endIndex])
+            if !nearbyBeaconIdentifers.contains(identifier) {
+                RadarLogger.sharedInstance.log(level: .debug, message: "Already outside beacon region | identifier = \(identifier)")
             } else {
-                RadarLogger.sharedInstance().log(withLevel: RadarLogLevelDebug, message: "Exited beacon region | identifier = \(identifier)")
-                nearbyBeaconIdentifers.removeAll { $0 as AnyObject === identifier as AnyObject }
+                RadarLogger.sharedInstance.log(level: .debug, message: "Exited beacon region | identifier = \(identifier)")
+                nearbyBeaconIdentifers.remove(identifier)
                 var location: CLLocation?
-                if RadarUtils.validLocation(manager.location) {
-                    location = manager.location
+                if let managerLocation = manager.location, RadarUtils.validLocation(managerLocation) {
+                    location = managerLocation
                 } else {
                     location = RadarState.lastLocation()
                 }
-                handle(location, source: RadarLocationSourceBeaconExit)
+                handleLocation(location, source: .beaconExit)
             }
         } else if manager.location != nil {
-            handle(manager.location, source: RadarLocationSourceGeofenceExit)
+            handleLocation(manager.location, source: .geofenceExit)
         }
     }
     
@@ -603,30 +596,30 @@ extension RadarLocationManager: CLLocationManagerDelegate {
         if !region.identifier.hasPrefix(kSyncBeaconIdentifierPrefix) {
             return
         }
-        let identifier = (region.identifier as NSString).substring(from: kSyncBeaconIdentifierPrefix.length)
+        let identifier = String(region.identifier[kSyncBeaconIdentifierPrefix.endIndex..<region.identifier.endIndex])
         if state == .inside {
-            RadarLogger.sharedInstance().log(withLevel: RadarLogLevelDebug, message: "Inside beacon region | identifier = \(identifier)")
-            nearbyBeaconIdentifers.append(identifier)
+            RadarLogger.sharedInstance.log(level: .debug, message: "Inside beacon region | identifier = \(identifier)")
+            nearbyBeaconIdentifers.insert(identifier)
         } else {
-            RadarLogger.sharedInstance().log(withLevel: RadarLogLevelDebug, message: "Outside beacon region | identifier = \(identifier)")
-            nearbyBeaconIdentifers.removeAll { $0 as AnyObject === identifier as AnyObject }
+            RadarLogger.sharedInstance.log(level: .debug, message: "Outside beacon region | identifier = \(identifier)")
+            nearbyBeaconIdentifers.remove(identifier)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
-        if manager.location == nil {
+        guard let location = manager.location else {
             return
         }
-        if visit.departureDate.isEqual(to: Date.distantFuture) {
-            handle(manager.location, source: RadarLocationSourceVisitArrival)
+        if visit.departureDate == Date.distantFuture {
+            handleLocation(location, source: .visitArrival)
         } else {
-            handle(manager.location, source: RadarLocationSourceVisitDeparture)
+            handleLocation(location, source: .visitDeparture)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        RadarDelegateHolder.sharedInstance().didFail(withStatus: RadarStatusErrorLocation)
-        callCompletionHandlers(withStatus: RadarStatusErrorLocation, location: nil)
+        RadarDelegateHolder.sharedInstance.didFail(status: .errorLocation)
+        callCompletionHandlers(status: .errorLocation, location: nil)
     }
     
 }
