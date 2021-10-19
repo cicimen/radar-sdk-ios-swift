@@ -10,7 +10,7 @@ import Foundation
 
 /// Represents a region.
 ///
-/// See the [Regions](https://radar.io/documentation/regions)
+/// See [Regions](https://radar.io/documentation/regions)
 class RadarRegion: NSObject {
     
     /// The Radar ID of the region.

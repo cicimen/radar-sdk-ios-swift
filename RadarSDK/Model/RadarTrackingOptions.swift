@@ -71,7 +71,7 @@ enum RadarTrackingOptionsSyncLocations : Int {
 
 /// An options class used to configure background tracking.
 ///
-/// See the [Docs](https://radar.io/documentation/sdk/ios) .
+/// See [Docs](https://radar.io/documentation/sdk/ios) .
 class RadarTrackingOptions {
     
     /// Determines the desired location update interval in seconds when stopped. Use 0 to shut down when stopped.
@@ -108,12 +108,12 @@ class RadarTrackingOptions {
     
     /// Determines whether the flashing blue status bar is shown when tracking.
     ///
-    /// See the [Apple Docs](https://developer.apple.com/documentation/corelocation/cllocationmanager/2923541-showsbackgroundlocationindicator) .
+    /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/cllocationmanager/2923541-showsbackgroundlocationindicator) .
     var showBlueBar = false
     
     /// Determines whether to use the iOS region monitoring service (geofencing) to create a client geofence around the device's current location when stopped.
     ///
-    /// See the [Apple Docs](https://developer.apple.com/documentation/corelocation/monitoring_the_user_s_proximity_to_geographic_regions) .
+    /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/monitoring_the_user_s_proximity_to_geographic_regions) .
     var useStoppedGeofence = false
     
     /// Determines the radius in meters of the client geofence around the device's current location when stopped.
@@ -121,7 +121,7 @@ class RadarTrackingOptions {
     
     /// Determines whether to use the iOS region monitoring service (geofencing) to create a client geofence around the device's current location when moving.
     ///
-    /// See the [Apple Docs](https://developer.apple.com/documentation/corelocation/monitoring_the_user_s_proximity_to_geographic_regions) .
+    /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/monitoring_the_user_s_proximity_to_geographic_regions) .
     var useMovingGeofence = false
     
     /// Determines the radius in meters of the client geofence around the device's current location when moving.
@@ -132,12 +132,12 @@ class RadarTrackingOptions {
     
     /// Determines whether to use the iOS visit monitoring service.
     ///
-    /// See the [Apple Docs](https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_visits_location_service) .
+    /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_visits_location_service) .
     var useVisits = false
     
     /// Determines whether to use the iOS significant location change service.
     ///
-    /// See the [Apple Docs](https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_significant-change_location_service) .
+    /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_significant-change_location_service) .
     var useSignificantLocationChanges = false
     
     /// Determines whether to monitor beacons.
@@ -162,7 +162,7 @@ class RadarTrackingOptions {
     ///
     /// Note that location updates may be delayed significantly by Low Power Mode, or if the device has connectivity issues, low battery, or wi-fi disabled.
     ///
-    /// See the [Apple Docs](https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_visits_location_service) .
+    /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_visits_location_service) .
     private(set) static var presetEfficient: RadarTrackingOptions?
     
     static func string(for desiredAccuracy: RadarTrackingOptionsDesiredAccuracy) -> String {

@@ -8,6 +8,98 @@
 import Foundation
 import CoreLocation
 
+
+/// Called when a location request succeeds, fails, or times out. Receives the request status and, if successful, the location.
+///
+/// See [Get location](https://radar.io/documentation/sdk/ios#get-location) .
+typealias RadarLocationCompletionHandler = (RadarStatus, CLLocation?, Bool) -> Void
+
+/// Called when a beacon ranging request succeeds, fails, or times out. Receives the request status and, if successful, the nearby beacon identifiers.
+///
+/// See [Beacons](https://radar.io/documentation/beacons) .
+typealias RadarBeaconCompletionHandler = (RadarStatus, [String]?) -> Void
+
+/// Called when a track request succeeds, fails, or times out. Receives the request status and, if successful, the user's location, an array of the events generated, and the user.
+///
+/// See [Docs](https://radar.io/documentation/sdk/ios) .
+typealias RadarTrackCompletionHandler = (RadarStatus, CLLocation?, [RadarEvent]?, RadarUser?) -> Void
+
+/**
+ Called when a trip update succeeds, fails, or times out.
+
+ Receives the request status and, if successful, the trip and an array of the events generated.
+
+ @see https://radar.io/documentation/sdk/ios
+ */
+typealias RadarTripCompletionHandler = (RadarStatus, RadarTrip?, [RadarEvent]?) -> Void
+
+/**
+ Called when a context request succeeds, fails, or times out.
+
+ Receives the request status and, if successful, the location and the context.
+
+ @see https://radar.io/documentation/api#context
+ */
+typealias RadarContextCompletionHandler = (RadarStatus, CLLocation?, RadarContext?) -> Void
+
+/**
+ Called when a place search request succeeds, fails, or times out.
+
+ Receives the request status and, if successful, the location and an array of places sorted by distance.
+
+ @see https://radar.io/documentation/api#search-places
+ */
+typealias RadarSearchPlacesCompletionHandler = (RadarStatus, CLLocation?, [RadarPlace]?) -> Void
+
+/**
+ Called when a geofence search request succeeds, fails, or times out.
+
+ Receives the request status and, if successful, the location and an array of geofences sorted by distance.
+
+ @see https://radar.io/documentation/api#search-geofences
+ */
+typealias RadarSearchGeofencesCompletionHandler = (RadarStatus, CLLocation?, [RadarGeofence]?) -> Void
+
+/**
+ Called when a geocoding request succeeds, fails, or times out.
+
+ Receives the request status and, if successful, the geocoding results (an array of addresses).
+
+ @see https://radar.io/documentation/api#forward-geocode
+ */
+typealias RadarGeocodeCompletionHandler = (RadarStatus, [RadarAddress]?) -> Void
+
+/**
+ Called when an IP geocoding request succeeds, fails, or times out.
+
+ Receives the request status and, if successful, the geocoding result (a partial address) and a boolean indicating whether the IP address is a known proxy.
+
+ @see https://radar.io/documentation/api#ip-geocode
+ */
+typealias RadarIPGeocodeCompletionHandler = (RadarStatus, RadarAddress?, Bool) -> Void
+
+/**
+ Called when a distance request succeeds, fails, or times out.
+
+ Receives the request status and, if successful, the routes.
+
+ @see https://radar.io/documentation/api#distance
+ */
+typealias RadarRouteCompletionHandler = (RadarStatus, RadarRoutes?) -> Void
+
+/**
+ Called when a matrix request succeeds, fails, or times out.
+
+ Receives the request status and, if successful, the matrix.
+
+ @see https://radar.io/documentation/api#matrix
+ */
+typealias RadarRouteMatrixCompletionHandler = (RadarStatus, RadarRouteMatrix?) -> Void
+
+
+
+
+
 public class Radar {
     
     

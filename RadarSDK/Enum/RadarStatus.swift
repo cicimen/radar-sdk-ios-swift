@@ -9,7 +9,7 @@ import Foundation
 
 /// The status types for a request.
 ///
-/// See the [Foreground tracking](https://radar.io/documentation/sdk/ios#foreground-tracking) .
+/// See [Foreground tracking](https://radar.io/documentation/sdk/ios#foreground-tracking) .
 public enum RadarStatus: Int {
     /// Success
     case success

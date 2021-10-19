@@ -9,7 +9,7 @@ import Foundation
 
 /// The travel modes for routes.
 ///
-/// See the [Routing](https://radar.io/documentation/api#routing)
+/// See [Routing](https://radar.io/documentation/api#routing)
 struct RadarRouteMode : OptionSet {
     let rawValue: Int
     /// Foot

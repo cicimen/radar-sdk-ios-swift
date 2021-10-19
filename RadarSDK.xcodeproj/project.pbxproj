@@ -218,11 +218,11 @@
 			children = (
 				88E22B6E27120535003997C1 /* RadarSDK.h */,
 				88EFA96827120884006DFD62 /* Radar.swift */,
+				8883EF56271ECA6E00C1A843 /* RadarBeaconManager.swift */,
 				8883EF58271ECB8700C1A843 /* Enum */,
 				8878714A27147133007666E1 /* Model */,
 				8878714E27147371007666E1 /* Utils */,
 				88E22B6F27120535003997C1 /* RadarSDK.docc */,
-				8883EF56271ECA6E00C1A843 /* RadarBeaconManager.swift */,
 			);
 			path = RadarSDK;
 			sourceTree = "<group>";

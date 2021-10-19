@@ -10,7 +10,7 @@ import CoreLocation
 
 /// Represents a place.
 ///
-/// See the [Places](https://radar.io/documentation/places)
+/// See [Places](https://radar.io/documentation/places)
 class RadarPlace {
     
     /// The Radar ID of the place.

@@ -31,22 +31,22 @@ class RadarUser {
     
     /// An array of the user's current geofences. May be `nil` or empty if the user is not in any geofences.
     ///
-    /// See the [Geofences](https://radar.io/documentation/geofences)
+    /// See [Geofences](https://radar.io/documentation/geofences)
     private(set) var geofences: [RadarGeofence]?
     
     /// The user's current place. May be `nil` if the user is not at a place or if Places is not enabled.
     ///
-    /// See the [Places](https://radar.io/documentation/places)
+    /// See [Places](https://radar.io/documentation/places)
     private(set) var place: RadarPlace?
     
     /// Learned insights for the user. May be `nil` if no insights are available or if Insights is not enabled.
     ///
-    /// See the [Insights](https://radar.io/documentation/insights)
+    /// See [Insights](https://radar.io/documentation/insights)
     private(set) var insights: RadarUserInsights?
     
     /// An array of the user's nearby beacons. May be `nil` or empty if the user is not near any beacons or if Beacons is not enabled.
     ///
-    /// See the [Beacons]( https://radar.io/documentation/beacons)
+    /// See [Beacons]( https://radar.io/documentation/beacons)
     private(set) var beacons: [RadarBeacon]?
     
     /// A boolean indicating whether the user is stopped.
@@ -57,22 +57,22 @@ class RadarUser {
     
     /// The user's current country. May be `nil` if country is not available or if Regions is not enabled.
     ///
-    /// See the [Regions](https://radar.io/documentation/regions)
+    /// See [Regions](https://radar.io/documentation/regions)
     private(set) var country: RadarRegion?
     
     /// The user's current state. May be `nil` if state is not available or if Regions is not enabled.
     ///
-    /// See the [Regions](https://radar.io/documentation/regions)
+    /// See [Regions](https://radar.io/documentation/regions)
     private(set) var state: RadarRegion?
     
     /// The user's current designated market area (DMA). May be `nil` if DMA is not available or if Regions is not enabled.
     ///
-    /// See the [Regions](https://radar.io/documentation/regions)
+    /// See [Regions](https://radar.io/documentation/regions)
     private(set) var dma: RadarRegion?
     
     /// The user's current postal code. May be `nil` if postal code is not available or if Regions is not enabled.
     ///
-    /// See the [Regions](https://radar.io/documentation/regions)
+    /// See [Regions](https://radar.io/documentation/regions)
     private(set) var postalCode: RadarRegion?
     
     /// The user's nearby chains. May be `nil` if no chains are nearby or if nearby chains are not enabled.

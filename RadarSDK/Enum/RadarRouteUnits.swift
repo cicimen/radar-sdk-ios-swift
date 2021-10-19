@@ -9,7 +9,7 @@ import Foundation
 
 /// The distance units for routes.
 ///
-/// See the [Routing](https://radar.io/documentation/api#routing)
+/// See [Routing](https://radar.io/documentation/api#routing)
 public enum RadarRouteUnits : Int {
     /// Imperial (feet)
     case imperial
