@@ -11,7 +11,7 @@ typealias RadarAPICompletionHandler = (RadarStatus, [AnyHashable : Any]?) -> Voi
 
 class RadarAPIHelper {
     
-    private var queue = DispatchQueue(label: "io.radar.api")
+    private var queue = DispatchQueue(label: "io.radar.api.RadarAPIHelper")
     private var semaphore = DispatchSemaphore(value: 0)
     private var wait = false
     

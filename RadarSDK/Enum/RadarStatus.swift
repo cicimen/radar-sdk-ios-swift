@@ -10,7 +10,7 @@ import Foundation
 /// The status types for a request.
 ///
 /// See [Foreground tracking](https://radar.io/documentation/sdk/ios#foreground-tracking) .
-public enum RadarStatus: Int {
+@objc public enum RadarStatus: Int {
     /// Success
     case success
     /// SDK not initialized
