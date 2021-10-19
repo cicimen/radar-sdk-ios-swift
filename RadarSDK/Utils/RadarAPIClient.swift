@@ -345,7 +345,7 @@ class RadarAPIClient {
         
     }
     
-    func searchGeofences(near: CLLocation, radius: Int, tags: [String]?, metadata: [AnyHashable : Any]?, limit: Int, completionHandler: @escaping RadarSearchGeofencesAPICompletionHandler ) {
+    func searchGeofences(near: CLLocation, radius: Int, tags: [String]?, metadata: [AnyHashable : Any]?, limit: Int, completionHandler: @escaping RadarSearchGeofencesAPICompletionHandler) {
         
         guard let publishableKey = RadarSettings.publishableKey() else {
             return completionHandler(.errorPublishableKey, nil, nil)
@@ -393,52 +393,300 @@ class RadarAPIClient {
         }
     }
     
-    func searchBeaconsNear(near: CLLocation, radius: Int, limit: Int, completionHandler: RadarSearchBeaconsAPICompletionHandler) {
+    func searchBeacons(near: CLLocation, radius: Int, limit: Int, completionHandler: @escaping RadarSearchBeaconsAPICompletionHandler) {
         
-        //TODO: BURADA KALDIM
-    }
-    
-    func autocompleteQuery(
-        _ query: String,
-        near: CLLocation?,
-        layers: [String]?,
-        limit: Int,
-        country: String?,
-        completionHandler: RadarGeocodeAPICompletionHandler
-    ) {
-    }
-    
-    func geocodeAddress(_ query: String, completionHandler: RadarGeocodeAPICompletionHandler) {
-    }
-    
-    func reverseGeocodeLocation(_ location: CLLocation, completionHandler: @escaping CLGeocodeCompletionHandler) {
+        guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        
+        let finalLimit = Int(min(limit, 100))
+        
+        var queryString = String(format: "near=%.06f,%.06f", near.coordinate.latitude, near.coordinate.longitude)
+        queryString += "&radius=\(radius)"
+        queryString += "&limit=\(finalLimit)"
+        
+        guard let urlString  = "\(RadarSettings.host())/v1/search/beacons?\(queryString)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
+            return //TODO: DO WE NEED TO CALL completionHandler
+        }
+        
+        apiHelper.request(method: "GET", url: urlString, headers: RadarAPIClient.headers(withPublishableKey: publishableKey), params: nil, sleep: false) { status, res in
+            
+            //TODO: GET RID OF CODE DUPLICATE LINES
+            guard let res = res else {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if status != .success {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if let beaconsArr = res["beacons"] as? [AnyHashable], let beacons = RadarBeacon.beacons(beaconsArr) {
+                return completionHandler(.success, res, beacons)
+            } else {
+                completionHandler(.errorServer, nil, nil)
+            }
+            
+        }
         
     }
     
-    func ipGeocode(with completionHandler: RadarIPGeocodeAPICompletionHandler) {
+    func autocomplete(query: String, near: CLLocation?, layers: [String]?, limit: Int, country: String?, completionHandler: @escaping RadarGeocodeAPICompletionHandler) {
+        
+        guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        
+        let finalLimit = Int(min(limit, 100))
+        
+        var queryString = "query=\(query)"
+        
+        if let near = near {
+            queryString += String(format: "&near=%.06f,%.06f", near.coordinate.latitude, near.coordinate.longitude)
+        }
+        
+        if let layers = layers, layers.count > 0 {
+            queryString += "&layers=\(layers.joined(separator: ","))"
+        }
+        
+        if limit != 0 {
+            queryString += "&limit=\(finalLimit)"
+        }
+        
+        if let country = country {
+            queryString += "&country=\(country)"
+        }
+        
+        guard let urlString  = "\(RadarSettings.host())/v1/search/autocomplete?\(queryString)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
+            return //TODO: DO WE NEED TO CALL completionHandler
+        }
+        
+        apiHelper.request(method: "GET", url: urlString, headers: RadarAPIClient.headers(withPublishableKey: publishableKey), params: nil, sleep: false) { status, res in
+            
+            //TODO: GET RID OF CODE DUPLICATE LINES
+            guard let res = res else {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if status != .success {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if let addressesArr = res["addresses"] as? [AnyHashable], let addresses = RadarAddress.addresses(addressesArr) {
+                return completionHandler(.success, res, addresses)
+            } else {
+                return completionHandler(.errorServer, nil, nil)
+            }
+            
+        }
         
     }
     
-    func getDistanceFromOrigin(
-        _ origin: CLLocation,
-        destination: CLLocation,
-        modes: RadarRouteMode,
-        units: RadarRouteUnits,
-        geometryPoints: Int,
-        completionHandler: RadarDistanceAPICompletionHandler
-    ) {
+    func geocodeAddress(query: String, completionHandler: @escaping RadarGeocodeAPICompletionHandler) {
+        
+        guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        
+        guard let urlString  = "\(RadarSettings.host())/v1/geocode/forward?query=\(query)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
+            return //TODO: DO WE NEED TO CALL completionHandler
+        }
+        
+        apiHelper.request(method: "GET", url: urlString, headers: RadarAPIClient.headers(withPublishableKey: publishableKey), params: nil, sleep: false) { status, res in
+            
+            //TODO: GET RID OF CODE DUPLICATE LINES
+            guard let res = res else {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if status != .success {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if let addressesArr = res["addresses"] as? [AnyHashable], let addresses = RadarAddress.addresses(addressesArr) {
+                return completionHandler(.success, res, addresses)
+            } else {
+                return completionHandler(.errorServer, nil, nil)
+            }
+            
+        }
+        
     }
     
-    func getMatrixFromOrigins(
-        _ origins: [CLLocation],
-        destinations: [CLLocation],
-        mode: RadarRouteMode,
-        units: RadarRouteUnits,
-        completionHandler: RadarMatrixAPICompletionHandler
-    ) {
+    func reverseGeocode(location: CLLocation, completionHandler: @escaping RadarGeocodeAPICompletionHandler) {
+        
+        guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        
+        guard let urlString  = "\(RadarSettings.host())/v1/geocode/reverse?\(String(format: "coordinates=%.06f,%.06f", location.coordinate.latitude, location.coordinate.longitude))".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
+            return //TODO: DO WE NEED TO CALL completionHandler
+        }
+        
+        apiHelper.request(method: "GET", url: urlString, headers: RadarAPIClient.headers(withPublishableKey: publishableKey), params: nil, sleep: false) { status, res in
+            
+            //TODO: GET RID OF CODE DUPLICATE LINES
+            guard let res = res else {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if status != .success {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if let addressesArr = res["addresses"] as? [AnyHashable], let addresses = RadarAddress.addresses(addressesArr) {
+                return completionHandler(.success, res, addresses)
+            } else {
+                return completionHandler(.errorServer, nil, nil)
+            }
+            
+        }
+        
+    }
+    
+    func ipGeocode(with completionHandler: @escaping RadarIPGeocodeAPICompletionHandler) {
+        
+        guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil, false)
+        }
+        
+        apiHelper.request(method: "GET", url: "\(RadarSettings.host())/v1/geocode/ip", headers: RadarAPIClient.headers(withPublishableKey: publishableKey), params: nil, sleep: false) { status, res in
+            
+            //TODO: GET RID OF CODE DUPLICATE LINES
+            guard let res = res else {
+                return completionHandler(status, nil, nil, false)
+            }
+            
+            if status != .success {
+                return completionHandler(status, nil, nil, false)
+            }
+            
+            if let addressDict = res["address"] as? [AnyHashable: Any] {
+                return completionHandler(.success, res, RadarAddress(addressDict), (res["proxy"] as? NSNumber)?.boolValue ?? false)
+            } else {
+                return completionHandler(.errorServer, nil, nil, false)
+            }
+            
+        }
+        
+    }
+    
+    func getDistance(origin: CLLocation, destination: CLLocation, modes: RadarRouteMode, units: RadarRouteUnits, geometryPoints: Int, completionHandler: @escaping RadarDistanceAPICompletionHandler) {
+        
+        guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        
+        var queryString = String(format: "origin=%.06f,%.06f&destination=%.06f,%.06f", origin.coordinate.latitude, origin.coordinate.longitude, destination.coordinate.latitude, destination.coordinate.longitude)
+        
+        var modesArr = [String]()
+        
+        if modes == .foot {
+            modesArr.append("foot")
+        }
+        
+        if modes == .bike {
+            modesArr.append("bike")
+        }
+        
+        if modes == .car {
+            modesArr.append("car")
+        }
+        
+        if modes == .truck {
+            modesArr.append("truck")
+        }
+        
+        if modes == .motorbike {
+            modesArr.append("motorbike")
+        }
+        
+        queryString += "&modes=\(modesArr.joined(separator: ","))"
+        
+        queryString += "&units=\(units == .metric ? "metric" : "imperial")"
+        
+        if geometryPoints > 1 {
+            queryString += "&geometryPoints=\(geometryPoints)"
+        }
+        
+        queryString += "&geometry=linestring"
+        
+        guard let urlString = "\(RadarSettings.host())/v1/route/distance?\(queryString)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
+            return //TODO: DO WE NEED TO CALL completionHandler
+        }
+        
+        apiHelper.request(method: "GET", url: urlString, headers: RadarAPIClient.headers(withPublishableKey: publishableKey), params: nil, sleep: false) { status, res in
+            
+            //TODO: GET RID OF CODE DUPLICATE LINES
+            guard let res = res else {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if status != .success {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if let routesDict = res["routes"] as? [AnyHashable: Any] {
+                return completionHandler(.success, res, RadarRoutes(routesDict))
+            } else {
+                completionHandler(.errorServer, nil, nil)
+            }
+            
+        }
+        
+    }
+    
+    func getMatrix(origins: [CLLocation], destinations: [CLLocation], mode: RadarRouteMode, units: RadarRouteUnits, completionHandler: @escaping RadarMatrixAPICompletionHandler) {
+        
+        guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        
+        var queryString = "origins=\(origins.map{String(format: "%.06f,%.06f", $0.coordinate.latitude, $0.coordinate.longitude)}.joined(separator: "|"))"
+        queryString += "destinations=\(destinations.map{String(format: "%.06f,%.06f", $0.coordinate.latitude, $0.coordinate.longitude)}.joined(separator: "|"))"
+        
+        var modeStr = ""
+        
+        if mode == .foot {
+            modeStr = "foot"
+        } else if mode == .bike {
+            modeStr = "bike"
+        } else if mode == .car {
+            modeStr = "car"
+        } else if mode == .truck {
+            modeStr = "truck"
+        } else if mode == .motorbike {
+            modeStr = "motorbike"
+        }
+        
+        queryString += "&mode=\(modeStr)"
+        
+        queryString += "&units=\(units == .metric ? "metric" : "imperial")"
+        
+        RadarLogger.sharedInstance.log(level: .info, message: queryString)
+        
+        guard let urlString = "\(RadarSettings.host())/v1/route/matrix?\(queryString)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
+            return  //TODO: DO WE NEED TO CALL completionHandler
+        }
+        
+        apiHelper.request(method: "GET", url: urlString, headers: RadarAPIClient.headers(withPublishableKey: publishableKey), params: nil, sleep: false) { status, res in
+            
+            //TODO: GET RID OF CODE DUPLICATE LINES
+            guard let res = res else {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if status != .success {
+                return completionHandler(status, nil, nil)
+            }
+            
+            if let matrixArr = res["matrix"] as? [AnyHashable] {
+                return completionHandler(.success, res, RadarRouteMatrix(matrixArr))
+            } else {
+                completionHandler(.errorServer, nil, nil)
+            }
+ 
+        }
+
     }
     
 }
-
-
-
