@@ -17,7 +17,7 @@ typealias RadarLocationCompletionHandler = (RadarStatus, CLLocation?, Bool) -> V
 /// Called when a beacon ranging request succeeds, fails, or times out. Receives the request status and, if successful, the nearby beacon identifiers.
 ///
 /// See [Beacons](https://radar.io/documentation/beacons).
-typealias RadarBeaconCompletionHandler = (RadarStatus, [String]?) -> Void
+public typealias RadarBeaconCompletionHandler = (RadarStatus, [String]?) -> Void
 
 /// Called when a track request succeeds, fails, or times out. Receives the request status and, if successful, the user's location, an array of the events generated, and the user.
 ///

@@ -153,7 +153,7 @@ public class RadarBeaconManager: NSObject{
     
 }
 
-// MARK: - CLLocationManagerDelegate implementation
+// MARK: - CLLocationManagerDelegate
 
 extension RadarBeaconManager : CLLocationManagerDelegate {
     

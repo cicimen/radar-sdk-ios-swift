@@ -86,7 +86,7 @@ class RadarTrackingOptions {
     var desiredSyncInterval = 0
     
     /// Determines the desired accuracy of location updates.
-    var desiredAccuracy: RadarTrackingOptionsDesiredAccuracy!
+    var desiredAccuracy = RadarTrackingOptionsDesiredAccuracy.medium
     
     /// With `stopDuration`, determines the distance in meters within which the device is considered stopped.
     var stopDuration = 0
@@ -101,10 +101,10 @@ class RadarTrackingOptions {
     var stopTrackingAfter: Date?
     
     /// Determines which failed location updates to replay to the server.
-    var replay: RadarTrackingOptionsReplay!
+    var replay = RadarTrackingOptionsReplay.none
     
     /// Determines which location updates to sync to the server.
-    var syncLocations: RadarTrackingOptionsSyncLocations!
+    var syncLocations = RadarTrackingOptionsSyncLocations.syncAll
     
     /// Determines whether the flashing blue status bar is shown when tracking.
     ///
@@ -143,27 +143,89 @@ class RadarTrackingOptions {
     /// Determines whether to monitor beacons.
     var beacons = false
     
-    
     /// Updates about every 30 seconds while moving or stopped. Moderate battery usage. Shows the flashing blue status bar during tracking.
     ///
-    ///
-    ///
-    private(set) static var presetContinuous: RadarTrackingOptions?
+    /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/cllocationmanager/2923541-showsbackgroundlocationindicator).
+    static let presetContinuous: RadarTrackingOptions = {
+        let options = RadarTrackingOptions()
+        options.desiredStoppedUpdateInterval = 30
+        options.desiredMovingUpdateInterval = 30
+        options.desiredSyncInterval = 20
+        options.desiredAccuracy = .high
+        options.stopDuration = 140
+        options.stopDistance = 70
+        options.startTrackingAfter = nil
+        options.stopTrackingAfter = nil
+        options.syncLocations = .syncAll
+        options.replay = .none
+        options.showBlueBar = true
+        options.useStoppedGeofence = false
+        options.stoppedGeofenceRadius = 0
+        options.useMovingGeofence = false
+        options.movingGeofenceRadius = 0
+        options.syncGeofences = false
+        options.useVisits = false
+        options.useSignificantLocationChanges = false
+        options.beacons = false
+        return options
+    }()
     
-    
-    /// Updates about every 2.5 minutes when moving and shuts down when stopped to save battery. Once stopped, the device will need to move more than 100 meters to wake up and start
-    /// moving again. Low battery usage. Requires the `location` background mode.
+    /// Updates about every 2.5 minutes when moving and shuts down when stopped to save battery. Once stopped, the device will need to move more than 100 meters to wake up and start moving again. Low battery usage. Requires the `location` background mode.
     ///
     /// Note that location updates may be delayed significantly by Low Power Mode, or if the device has connectivity issues, low battery, or wi-fi disabled.
-    private(set) static var presetResponsive: RadarTrackingOptions?
+    static let presetResponsive: RadarTrackingOptions = {
+        let options = RadarTrackingOptions()
+        options.desiredStoppedUpdateInterval = 0
+        options.desiredMovingUpdateInterval = 150
+        options.desiredSyncInterval = 20
+        options.desiredAccuracy = .medium
+        options.stopDuration = 140
+        options.stopDistance = 70
+        options.startTrackingAfter = nil
+        options.stopTrackingAfter = nil
+        options.syncLocations = .syncAll
+        options.replay = .stops
+        options.showBlueBar = false
+        options.useStoppedGeofence = true
+        options.stoppedGeofenceRadius = 100
+        options.useMovingGeofence = false
+        options.movingGeofenceRadius = 0
+        options.syncGeofences = true
+        options.useVisits = true
+        options.useSignificantLocationChanges = true
+        options.beacons = false
+        return options
+    }()
     
     /// Uses the iOS visit monitoring service to update only on stops and exits. Once stopped, the device will need to move several hundred meters and trigger a visit departure to wake up
     /// and start moving again. Lowest battery usage.
     ///
     /// Note that location updates may be delayed significantly by Low Power Mode, or if the device has connectivity issues, low battery, or wi-fi disabled.
     ///
-    /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_visits_location_service) .
-    private(set) static var presetEfficient: RadarTrackingOptions?
+    /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_visits_location_service).
+    static let presetEfficient: RadarTrackingOptions = {
+        let options = RadarTrackingOptions()
+        options.desiredStoppedUpdateInterval = 0
+        options.desiredMovingUpdateInterval = 0
+        options.desiredSyncInterval = 0
+        options.desiredAccuracy = .medium
+        options.stopDuration = 0
+        options.stopDistance = 0
+        options.startTrackingAfter = nil
+        options.stopTrackingAfter = nil
+        options.syncLocations = .syncAll
+        options.replay = .stops
+        options.showBlueBar = false
+        options.useStoppedGeofence = false
+        options.stoppedGeofenceRadius = 0
+        options.useMovingGeofence = false
+        options.movingGeofenceRadius = 0
+        options.syncGeofences = true
+        options.useVisits = true
+        options.useSignificantLocationChanges = false
+        options.beacons = false
+        return options
+    }()
     
     static func string(for desiredAccuracy: RadarTrackingOptionsDesiredAccuracy) -> String {
         switch desiredAccuracy {
@@ -221,10 +283,10 @@ class RadarTrackingOptions {
     
     convenience init(fromDictionary dict: [String : Any]) {
         self.init()
+        desiredAccuracy = RadarTrackingOptions.desiredAccuracy(for: dict[kDesiredAccuracy] as? String ?? "")
         desiredStoppedUpdateInterval = (dict[kDesiredStoppedUpdateInterval] as? NSNumber)?.intValue ?? 0
         desiredMovingUpdateInterval = (dict[kDesiredMovingUpdateInterval] as? NSNumber)?.intValue ?? 0
         desiredSyncInterval = (dict[kDesiredSyncInterval] as? NSNumber)?.intValue ?? 0
-        desiredAccuracy = RadarTrackingOptions.desiredAccuracy(for: dict[kDesiredAccuracy] as? String ?? "")
         stopDuration = (dict[kStopDuration] as? NSNumber)?.intValue ?? 0
         stopDistance = (dict[kStopDistance] as? NSNumber)?.intValue ?? 0
         startTrackingAfter = dict[kStartTrackingAfter] as? Date
