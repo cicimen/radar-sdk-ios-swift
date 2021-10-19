@@ -9,9 +9,12 @@ import Foundation
 import CoreLocation
 
 class RadarDelegateHolder: NSObject, RadarDelegate {
-    weak var delegate: RadarDelegate?
     
     static let sharedInstance = RadarDelegateHolder()
+    
+    weak var delegate: RadarDelegate?
+    
+    
     
     func didReceiveEvents(_ events: [RadarEvent], user: RadarUser?) {
         if events.isEmpty {

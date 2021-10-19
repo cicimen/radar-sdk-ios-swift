@@ -9,6 +9,9 @@ import Foundation
 import CoreLocation
 
 class RadarBeaconManager: CLLocationManagerDelegate {
+    
+    static let sharedInstance = RadarBeaconManager()
+    
     var locationManager: CLLocationManager
     var permissionsHelper: RadarPermissionsHelper
     
@@ -18,7 +21,7 @@ class RadarBeaconManager: CLLocationManagerDelegate {
     private var failedBeaconIdentifiers: Set<String> = []
     private var beacons: [RadarBeacon] = []
     
-    static let sharedInstance = RadarBeaconManager()
+    
     
     
     

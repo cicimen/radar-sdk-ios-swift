@@ -21,9 +21,9 @@ typealias RadarMatrixAPICompletionHandler = (RadarStatus, [AnyHashable : Any]?, 
 
 class RadarAPIClient {
     
-    var apiHelper: RadarAPIHelper
-    
     static let sharedInstance = RadarAPIClient()
+    
+    var apiHelper: RadarAPIHelper
     
     init() {
         apiHelper = RadarAPIHelper()
