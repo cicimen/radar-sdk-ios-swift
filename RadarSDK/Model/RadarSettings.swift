@@ -47,6 +47,7 @@ class RadarSettings {
         return String(format: "%.f", UserDefaults.standard.double(forKey: kSessionId))
     }
     
+    @discardableResult
     static func updateSessionId() -> Bool {
         let timestampSeconds = Date().timeIntervalSince1970
         let sessionIdSeconds = UserDefaults.standard.double(forKey: kSessionId)
@@ -78,7 +79,7 @@ class RadarSettings {
         UserDefaults.standard.set(userId, forKey: kUserId)
     }
     
-    static func __description() -> String? {
+    static func description() -> String? {
         return UserDefaults.standard.string(forKey: kDescription)
     }
     
@@ -86,11 +87,11 @@ class RadarSettings {
         UserDefaults.standard.set(description, forKey: kDescription)
     }
     
-    static func metadata() -> [AnyHashable : Any]? {
+    static func metadata() -> [String : Any]? {
         return UserDefaults.standard.dictionary(forKey: kMetadata)
     }
     
-    static func setMetadata(_ metadata: String?) {
+    static func setMetadata(_ metadata: [String : Any]?) {
         UserDefaults.standard.set(metadata, forKey: kMetadata)
     }
     

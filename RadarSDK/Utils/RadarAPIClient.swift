@@ -74,7 +74,7 @@ class RadarAPIClient {
         params["installId"] = RadarSettings.installId()
         params["userId"] = RadarSettings.userId()
         params["deviceId"] = RadarUtils.deviceId()
-        params["description"] = RadarSettings.__description()
+        params["description"] = RadarSettings.description()
         params["metadata"] = RadarSettings.metadata()
         if RadarSettings.adIdEnabled() {
             params["adId"] = RadarUtils.adId()

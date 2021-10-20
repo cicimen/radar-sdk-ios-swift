@@ -29,7 +29,7 @@ enum RadarTripStatus: Int {
 /// Represents a trip.
 ///
 /// See [Trip Tracking](https://radar.io/documentation/trip-tracking).
-class RadarTrip {
+public class RadarTrip {
     
     /// The Radar ID of the trip.
     private(set) var id = ""

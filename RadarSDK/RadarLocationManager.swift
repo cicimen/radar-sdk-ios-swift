@@ -86,7 +86,7 @@ class RadarLocationManager: NSObject  {
         }
     }
     
-    func getLocation(completionHandler: RadarLocationCompletionHandler?, desiredAccuracy: RadarTrackingOptionsDesiredAccuracy = .medium) {
+    func getLocation(desiredAccuracy: RadarTrackingOptionsDesiredAccuracy = .medium, completionHandler: RadarLocationCompletionHandler?) {
         let authorizationStatus = permissionsHelper.locationAuthorizationStatus()
         if !(authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways) {
             RadarDelegateHolder.sharedInstance.didFail(status: .errorPermissions)
@@ -107,8 +107,6 @@ class RadarLocationManager: NSObject  {
             locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         case .low:
             locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-        default:
-            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         }
         
         requestLocation()
@@ -207,8 +205,6 @@ class RadarLocationManager: NSObject  {
                     self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
                 case .low:
                     self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-                default:
-                    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
                 }
                 
                 if #available(iOS 11, *) {
@@ -375,7 +371,7 @@ extension RadarLocationManager {
             callCompletionHandlers(status: .errorLocation, location: nil)
             return
         }
-
+        
         let options = RadarSettings.trackingOptions()
         let wasStopped = RadarState.stopped()
         var stopped = false
@@ -388,7 +384,7 @@ extension RadarLocationManager {
             updateTracking(location)
             return
         }
-                
+        
         if !force && !RadarSettings.tracking() {
             RadarLogger.sharedInstance.log(level: .debug, message: "Skipping location: not tracking")
             return

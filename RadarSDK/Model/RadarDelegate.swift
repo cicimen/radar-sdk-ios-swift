@@ -13,7 +13,7 @@ import CoreLocation
 /// A delegate for client-side delivery of events, location updates, and debug logs
 ///
 /// See [Docs](https://radar.io/documentation/sdk/ios) .
-protocol RadarDelegate: AnyObject {
+public protocol RadarDelegate: AnyObject {
 
     /// Tells the delegate that events were received.
     /// - Parameters:

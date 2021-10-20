@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 /// Represents the current user state.
-class RadarUser {
+public class RadarUser {
     
     /// The Radar ID of the user.
     private(set) var id = ""

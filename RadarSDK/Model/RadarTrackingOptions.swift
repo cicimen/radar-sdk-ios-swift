@@ -41,7 +41,7 @@ let kSyncStopsAndExits = "stopsAndExits"
 let kSyncNone = "none"
 
 /// The location accuracy options.
-enum RadarTrackingOptionsDesiredAccuracy : Int {
+public enum RadarTrackingOptionsDesiredAccuracy : Int {
     /// Uses `kCLLocationAccuracyBest`
     case high
     /// Uses `kCLLocationAccuracyHundredMeters`, the default
@@ -72,7 +72,7 @@ enum RadarTrackingOptionsSyncLocations : Int {
 /// An options class used to configure background tracking.
 ///
 /// See [Docs](https://radar.io/documentation/sdk/ios) .
-class RadarTrackingOptions {
+public class RadarTrackingOptions {
     
     /// Determines the desired location update interval in seconds when stopped. Use 0 to shut down when stopped.
     /// - Warning: Note that location updates may be delayed significantly by Low Power Mode, or if the device has connectivity issues, low battery, or wi-fi disabled.

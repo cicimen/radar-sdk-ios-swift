@@ -17,7 +17,7 @@ let kMode = "mode"
 /// An options class used to configure trip tracking.
 ///
 /// See [Docs](https://radar.io/documentation/sdk/ios) .
-class RadarTripOptions {
+public class RadarTripOptions {
     
     /// A stable unique ID for the trip.
     var externalId = ""

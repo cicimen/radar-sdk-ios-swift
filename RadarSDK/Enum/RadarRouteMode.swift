@@ -10,16 +10,27 @@ import Foundation
 /// The travel modes for routes.
 ///
 /// See [Routing](https://radar.io/documentation/api#routing)
-struct RadarRouteMode : OptionSet {
-    let rawValue: Int
+public struct RadarRouteMode : OptionSet {
+    
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    
     /// Foot
-    static let foot = RadarRouteMode(rawValue: 1 << 0)
+    public static let foot = RadarRouteMode(rawValue: 1 << 0)
+    
     /// Bike
-    static let bike = RadarRouteMode(rawValue: 1 << 1)
+    public static let bike = RadarRouteMode(rawValue: 1 << 1)
+    
     /// Car
-    static let car = RadarRouteMode(rawValue: 1 << 2)
+    public static let car = RadarRouteMode(rawValue: 1 << 2)
+    
     /// Truck
-    static let truck = RadarRouteMode(rawValue: 1 << 3)
+    public static let truck = RadarRouteMode(rawValue: 1 << 3)
+    
     /// Motorbike
-    static let motorbike = RadarRouteMode(rawValue: 1 << 4)
+    public static let motorbike = RadarRouteMode(rawValue: 1 << 4)
+    
 }

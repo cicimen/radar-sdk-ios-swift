@@ -94,7 +94,7 @@ enum RadarEventVerification : Int {
 
 
 /// Represents a change in user state.
-class RadarEvent {
+public class RadarEvent {
     
     // The Radar ID of the event.
     private(set) var id = ""
