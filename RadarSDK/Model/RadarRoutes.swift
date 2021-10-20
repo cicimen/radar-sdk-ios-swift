@@ -10,7 +10,7 @@ import Foundation
 /// Represents routes from an origin to a destination.
 ///
 /// See [Distance](https://radar.io/documentation/api#distance).
-class RadarRoutes {
+public class RadarRoutes {
     
     /// The geodesic distance between the origin and destination.
     private(set) var geodesic: RadarRouteDistance?

@@ -32,37 +32,37 @@ public typealias RadarTripCompletionHandler = (RadarStatus, RadarTrip?, [RadarEv
 /// Called when a context request succeeds, fails, or times out. Receives the request status and, if successful, the location and the context.
 ///
 /// See [Context](https://radar.io/documentation/api#context).
-typealias RadarContextCompletionHandler = (RadarStatus, CLLocation?, RadarContext?) -> Void
+public typealias RadarContextCompletionHandler = (RadarStatus, CLLocation?, RadarContext?) -> Void
 
 /// Called when a place search request succeeds, fails, or times out. Receives the request status and, if successful, the location and an array of places sorted by distance.
 ///
 /// See [Search Places](https://radar.io/documentation/api#search-places).
-typealias RadarSearchPlacesCompletionHandler = (RadarStatus, CLLocation?, [RadarPlace]?) -> Void
+public typealias RadarSearchPlacesCompletionHandler = (RadarStatus, CLLocation?, [RadarPlace]?) -> Void
 
 /// Called when a geofence search request succeeds, fails, or times out. Receives the request status and, if successful, the location and an array of geofences sorted by distance.
 ///
 /// See [Search Geofences](https://radar.io/documentation/api#search-geofences).
-typealias RadarSearchGeofencesCompletionHandler = (RadarStatus, CLLocation?, [RadarGeofence]?) -> Void
+public typealias RadarSearchGeofencesCompletionHandler = (RadarStatus, CLLocation?, [RadarGeofence]?) -> Void
 
 /// Called when a geocoding request succeeds, fails, or times out. Receives the request status and, if successful, the geocoding results (an array of addresses).
 ///
 /// See [Forward Geocode](https://radar.io/documentation/api#forward-geocode).
-typealias RadarGeocodeCompletionHandler = (RadarStatus, [RadarAddress]?) -> Void
+public typealias RadarGeocodeCompletionHandler = (RadarStatus, [RadarAddress]?) -> Void
 
 /// Called when an IP geocoding request succeeds, fails, or times out. Receives the request status and, if successful, the geocoding result (a partial address) and a boolean indicating whether the IP address is a known proxy.
 ///
 /// See [IP Geocode](https://radar.io/documentation/api#ip-geocode).
-typealias RadarIPGeocodeCompletionHandler = (RadarStatus, RadarAddress?, Bool) -> Void
+public typealias RadarIPGeocodeCompletionHandler = (RadarStatus, RadarAddress?, Bool) -> Void
 
 /// Called when a distance request succeeds, fails, or times out. Receives the request status and, if successful, the routes.
 ///
 /// See [Distance](https://radar.io/documentation/api#distance).
-typealias RadarRouteCompletionHandler = (RadarStatus, RadarRoutes?) -> Void
+public typealias RadarRouteCompletionHandler = (RadarStatus, RadarRoutes?) -> Void
 
 /// Called when a matrix request succeeds, fails, or times out. Receives the request status and, if successful, the matrix.
 ///
 /// See [Matrix](https://radar.io/documentation/api#matrix).
-typealias RadarRouteMatrixCompletionHandler = (RadarStatus, RadarRouteMatrix?) -> Void
+public typealias RadarRouteMatrixCompletionHandler = (RadarStatus, RadarRouteMatrix?) -> Void
 
 
 
@@ -176,7 +176,7 @@ public class Radar {
     ///     - completionHandler: An optional completion handler.
     ///
     /// See [Get Location](https://radar.io/documentation/sdk/ios#get-location).
-    public static func getLocation(_ completionHandler: RadarLocationCompletionHandler?, desiredAccuracy: RadarTrackingOptionsDesiredAccuracy = .medium) {
+    public static func getLocation(desiredAccuracy: RadarTrackingOptionsDesiredAccuracy = .medium, completionHandler: RadarLocationCompletionHandler? = nil) {
         RadarLocationManager.sharedInstance.getLocation(desiredAccuracy: desiredAccuracy) { status, location, stopped in
             RadarUtils.run(onMainThread: {
                 completionHandler?(status, location, stopped)
@@ -195,7 +195,7 @@ public class Radar {
     ///     - completionHandler: An optional completion handler.
     ///
     /// See [Foreground Tracking](https://radar.io/documentation/sdk/ios#foreground-tracking).
-    public static func trackOnce(desiredAccuracy: RadarTrackingOptionsDesiredAccuracy = .medium, beacons: Bool = false, completionHandler: RadarTrackCompletionHandler?) {
+    public static func trackOnce(desiredAccuracy: RadarTrackingOptionsDesiredAccuracy = .medium, beacons: Bool = false, completionHandler: RadarTrackCompletionHandler? = nil) {
         RadarLocationManager.sharedInstance.getLocation(desiredAccuracy: desiredAccuracy) { status, location, stopped in
             if status != .success {
                 if let completionHandler = completionHandler{
@@ -263,7 +263,7 @@ public class Radar {
     ///     - completionHandler: An optional completion handler.
     ///
     /// See [Foreground Tracking](https://radar.io/documentation/sdk/ios#foreground-tracking).
-    public static func trackOnce(location: CLLocation, completionHandler: RadarTrackCompletionHandler?) {
+    public static func trackOnce(location: CLLocation, completionHandler: RadarTrackCompletionHandler? = nil) {
         RadarAPIClient.sharedInstance.track(location: location, stopped: false, foreground: true, source: .manualLocation, replayed: false, nearbyBeacons: nil) { status, res, events, user, nearbyGeofences in
             if let completionHandler = completionHandler {
                 RadarUtils.run(onMainThread: {
@@ -295,7 +295,7 @@ public class Radar {
     ///     - interval: The interval in seconds between each mock location update. A number between 1 and 60.
     ///
     /// See [Mock Tracking for Testing](https://radar.io/documentation/sdk/ios#mock-tracking-for-testing).
-    public static func mockTracking(origin: CLLocation, destination: CLLocation, mode: RadarRouteMode, steps: Int, interval: TimeInterval, completionHandler: RadarTrackCompletionHandler?) {
+    public static func mockTracking(origin: CLLocation, destination: CLLocation, mode: RadarRouteMode, steps: Int, interval: TimeInterval, completionHandler: RadarTrackCompletionHandler? = nil) {
         RadarAPIClient.sharedInstance.getDistance(origin: origin, destination: destination, modes: mode, units: .metric, geometryPoints: steps) { status, res, routes in
             var coordinates: [RadarCoordinate]?
             if let routes = routes {
@@ -431,7 +431,7 @@ public class Radar {
     ///     - completionHandler: An optional completion handler.
     ///
     /// See [Trip Tracking](https://radar.io/documentation/trip-tracking).
-    public static func startTrip(options: RadarTripOptions, completionHandler: RadarTripCompletionHandler?) {
+    public static func startTrip(options: RadarTripOptions, completionHandler: RadarTripCompletionHandler? = nil) {
         RadarAPIClient.sharedInstance.updateTrip(options: options, status: .started) { status, trip, events in
             if status == .success {
                 RadarSettings.setTripOptions(options)
@@ -446,27 +446,432 @@ public class Radar {
         }
     }
     
+    /// Manually updates a trip.
+    ///
+    /// - Parameters:
+    ///
+    ///     - options: Configurable trip options.
+    ///     - status: The trip status. To avoid updating status, pass RadarTripStatus.unknown.
+    ///     - completionHandler: An optional completion handler.
+    ///
+    /// See [Trip Tracking](https://radar.io/documentation/trip-tracking).
+    public static func updateTrip(options: RadarTripOptions, status: RadarTripStatus, completionHandler: RadarTripCompletionHandler? = nil) {
+        RadarAPIClient.sharedInstance.updateTrip(options: options, status: status) { status, trip, events in
+            if status == .success {
+                RadarSettings.setTripOptions(options)
+                // flush location update to generate events
+                RadarLocationManager.sharedInstance.getLocation(completionHandler: nil)
+            }
+            if let completionHandler = completionHandler {
+                RadarUtils.run(onMainThread: {
+                    completionHandler(status, trip, events)
+                })
+            }
+        }
+    }
+    
+    /// Completes a trip.
+    ///
+    /// - Parameters:
+    ///
+    ///     - completionHandler: An optional completion handler.
+    ///
+    /// See [Trip Tracking](https://radar.io/documentation/trip-tracking).
+    public static func completeTrip(completionHandler: RadarTripCompletionHandler? = nil) {
+        let options = RadarSettings.tripOptions()
+        RadarAPIClient.sharedInstance.updateTrip(options: options, status: .completed) { status, trip, events in
+            if status == .success || status == .errorNotFound {
+                RadarSettings.setTripOptions(nil)
+                // flush location update to generate events
+                RadarLocationManager.sharedInstance.getLocation(completionHandler: nil)
+            }
+            if let completionHandler = completionHandler {
+                RadarUtils.run(onMainThread: {
+                    completionHandler(status, trip, events)
+                })
+            }
+        }
+    }
+    
+    /// Cancels a trip.
+    ///
+    /// - Parameters:
+    ///
+    ///     - completionHandler: An optional completion handler.
+    ///
+    /// See [Trip Tracking](https://radar.io/documentation/trip-tracking).
+    public static func cancelTrip(completionHandler: RadarTripCompletionHandler? = nil) {
+        let options = RadarSettings.tripOptions()
+        RadarAPIClient.sharedInstance.updateTrip(options: options, status: .canceled) { status, trip, events in
+            if status == .success || status == .errorNotFound {
+                RadarSettings.setTripOptions(nil)
+                // flush location update to generate events
+                RadarLocationManager.sharedInstance.getLocation(completionHandler: nil)
+            }
+            if let completionHandler = completionHandler {
+                RadarUtils.run(onMainThread: {
+                    completionHandler(status, trip, events)
+                })
+            }
+        }
+    }
+    
+    /// Gets the device's current location, then gets context for that location without sending device or user identifiers to the server.
+    ///
+    /// - Parameters:
+    ///
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [Search Geofences](https://radar.io/documentation/api#search-geofences).
+    public static func getContext(completionHandler: @escaping RadarContextCompletionHandler) {
+        RadarLocationManager.sharedInstance.getLocation(desiredAccuracy: .medium) { status, location, stopped in
+            if status != .success {
+                RadarUtils.run(onMainThread: {
+                    completionHandler(status, nil, nil)
+                })
+                return
+            }
+            
+            //TODO: CHECK RETURN AGAIN
+            guard let location = location else {
+                return
+            }
+            
+            RadarAPIClient.sharedInstance.getContext(location: location) { status, res, context in
+                RadarUtils.run(onMainThread: {
+                    completionHandler(status, location, context)
+                })
+            }
+        }
+    }
+    
+    /// Gets context for a location without sending device or user identifiers to the server.
+    ///
+    /// - Parameters:
+    ///
+    ///     - location: The location.
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [Context](https://radar.io/documentation/api#context).
+    public static func getContext(location: CLLocation, completionHandler: @escaping RadarContextCompletionHandler) {
+        RadarAPIClient.sharedInstance.getContext(location:location) { status, res, context in
+            RadarUtils.run(onMainThread: {
+                completionHandler(status, location, context)
+            })
+        }
+    }
+    
+    /// Gets the device's current location, then searches for places near that location, sorted by distance.
+    ///
+    /// - Warning: You may specify only one of chains, categories, or groups.
+    ///
+    /// - Parameters:
+    ///
+    ///     - radius: The radius to search, in meters. A number between 100 and 10000.
+    ///     - chains: An array of chain slugs to filter. See [Chains](https://radar.io/documentation/places/chains).
+    ///     - categories: An array of categories to filter. See [Categories](https://radar.io/documentation/places/categories).
+    ///     - groups: An array of groups to filter. See [Groups](https://radar.io/documentation/places/groups).
+    ///     - limit: The max number of places to return. A number between 1 and 100.
+    ///     - completionHandler: A completion handler.
+    ///
+    ///
+    /// See [Search Places](https://radar.io/documentation/api#search-places).
+    public static func searchPlaces(radius: Int, chains: [String]?, categories: [String]?, groups: [String]?, limit: Int, completionHandler: RadarSearchPlacesCompletionHandler? = nil) {
+        RadarLocationManager.sharedInstance.getLocation(desiredAccuracy: .medium) { status, location, stopped in
+            if status != .success {
+                if let completionHandler = completionHandler {
+                    RadarUtils.run(onMainThread: {
+                        completionHandler(status, nil, nil)
+                    })
+                }
+                return
+            }
+            
+            //TODO: CHECK RETURN AGAIN
+            guard let location = location else {
+                return
+            }
+            
+            RadarAPIClient.sharedInstance.searchPlaces(near: location, radius: radius, chains: chains, categories: categories, groups: groups, limit: limit) { status, res, places in
+                if let completionHandler = completionHandler {
+                    RadarUtils.run(onMainThread: {
+                        completionHandler(status, location, places)
+                    })
+                }
+            }
+        }
+    }
+    
+    /// Searches for places near a location, sorted by distance.
+    ///
+    /// - Warning: You may specify only one of chains, categories, or groups.
+    ///
+    /// - Parameters:
+    ///
+    ///     - near: The location to search.
+    ///     - radius: The radius to search, in meters. A number between 100 and 10000.
+    ///     - chains: An array of chain slugs to filter. See [Chains](https://radar.io/documentation/places/chains).
+    ///     - categories: An array of categories to filter. See [Categories](https://radar.io/documentation/places/categories).
+    ///     - groups: An array of groups to filter. See [Groups](https://radar.io/documentation/places/groups).
+    ///     - limit: The max number of places to return. A number between 1 and 100.
+    ///     - completionHandler: A completion handler.
+    ///
+    ///
+    /// See [Search Places](https://radar.io/documentation/api#search-places).
+    public static func searchPlaces(near: CLLocation, radius: Int, chains: [String]?, categories: [String]?, groups: [String]?, limit: Int, completionHandler: @escaping RadarSearchPlacesCompletionHandler) {
+        RadarAPIClient.sharedInstance.searchPlaces(near: near, radius: radius, chains: chains, categories: categories, groups: groups, limit: limit) { status, res, places in
+            RadarUtils.run(onMainThread: {
+                completionHandler(status, near, places)
+            })
+        }
+    }
+    
+    /// Gets the device's current location, then searches for geofences near that location, sorted by distance.
+    ///
+    /// - Parameters:
+    ///
+    ///     - radius: The radius to search, in meters. A number between 100 and 10000.
+    ///     - tags: An array of tags to filter. See [Geofences](https://radar.io/documentation/geofences).
+    ///     - metadata: A dictionary of metadata to filter. See [Geofences](https://radar.io/documentation/geofences).
+    ///     - limit: limit The max number of geofences to return. A number between 1 and 100.
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [Search Geofences](https://radar.io/documentation/api#search-geofences).
+    public static func searchGeofences(radius: Int, tags: [String]?, metadata: [String : Any]?, limit: Int, completionHandler: @escaping RadarSearchGeofencesCompletionHandler) {
+        RadarLocationManager.sharedInstance.getLocation(){ status, location, stopped in
+            if status != .success {
+                RadarUtils.run(onMainThread: {
+                    completionHandler(status, nil, nil)
+                })
+                return
+            }
+            
+            //TODO: CHECK RETURN AGAIN
+            guard let location = location else {
+                return
+            }
+            
+            RadarAPIClient.sharedInstance.searchGeofences(near: location, radius: radius, tags: tags, metadata: metadata, limit: limit) { status, res, geofences in
+                RadarUtils.run(onMainThread: {
+                    completionHandler(status, location, geofences)
+                })
+            }
+        }
+    }
+    
+    /// Searches for geofences near a location, sorted by distance.
+    ///
+    /// - Parameters:
+    ///
+    ///     - near: The location to search.
+    ///     - radius: The radius to search, in meters. A number between 100 and 10000.
+    ///     - tags: An array of tags to filter. See [Geofences](https://radar.io/documentation/geofences).
+    ///     - metadata: A dictionary of metadata to filter. See [Geofences](https://radar.io/documentation/geofences).
+    ///     - limit: limit The max number of geofences to return. A number between 1 and 100.
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [Search Geofences](https://radar.io/documentation/api#search-geofences).
+    public static func searchGeofencesNear(near: CLLocation, radius: Int, tags: [String]?, metadata: [String : Any]?, limit: Int, completionHandler: @escaping RadarSearchGeofencesCompletionHandler) {
+        RadarAPIClient.sharedInstance.searchGeofences(near: near, radius: radius, tags: tags, metadata: metadata, limit: limit) { status, res, geofences in
+            RadarUtils.run(onMainThread: {
+                completionHandler(status, near, geofences)
+            })
+        }
+    }
+    
+    /// Autocompletes partial addresses and place names, sorted by relevance.
+    ///
+    /// - Parameters:
+    ///
+    ///     - query: The partial address or place name to autocomplete.
+    ///     - near: An optional location for the search.
+    ///     - layers: Optional layer filters.
+    ///     - limit: The max number of addresses to return. A number between 1 and 100.
+    ///     - country: An optional country filter. A string, the unique 2-letter country code.
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [Autocomplete](https://radar.io/documentation/api#autocomplete).
+    public static func autocomplete(query: String, near: CLLocation? = nil, layers: [String]? = nil, limit: Int, country: String? = nil, completionHandler: @escaping RadarGeocodeCompletionHandler) {
+        RadarAPIClient.sharedInstance.autocomplete(query: query, near: near, layers: layers, limit: limit, country: country) { status, res, addresses in
+            RadarUtils.run(onMainThread: {
+                completionHandler(status, addresses)
+            })
+        }
+    }
+    
+    /// Geocodes an address, converting address to coordinates.
+    ///
+    /// - Parameters:
+    ///
+    ///     - query: The address to geocode.
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [Forward Geocode](https://radar.io/documentation/api#forward-geocode).
+    public static func geocodeAddress(query: String, completionHandler: @escaping RadarGeocodeCompletionHandler) {
+        RadarAPIClient.sharedInstance.geocodeAddress(query:query) { status, res, addresses in
+            RadarUtils.run(onMainThread: {
+                completionHandler(status, addresses)
+            })
+        }
+    }
+    
+    /// Reverse geocodes a location, converting coordinates to address. If location `nil`, the device's current location will be used.
+    ///
+    /// - Parameters:
+    ///
+    ///     - location: The location to reverse geocode. If location `nil`, the device's current location will be used.
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [Reverse Geocode](https://radar.io/documentation/api#reverse-geocode).
+    public static func reverseGeocode(location: CLLocation? = nil, completionHandler: @escaping RadarGeocodeCompletionHandler) {
+        if let location = location {
+            RadarAPIClient.sharedInstance.reverseGeocode(location: location) { status, res, addresses in
+                RadarUtils.run(onMainThread: {
+                    completionHandler(status, addresses)
+                })
+                return
+            }
+        } else {
+            RadarLocationManager.sharedInstance.getLocation(){ status, location, stopped in
+                if status != .success {
+                    RadarUtils.run(onMainThread: {
+                        completionHandler(status, nil)
+                    })
+                    return
+                }
+                //TODO: CHECK RETURN AGAIN
+                guard let location = location else {
+                    return
+                }
+                RadarAPIClient.sharedInstance.reverseGeocode(location: location) { status, res, addresses in
+                    RadarUtils.run(onMainThread: {
+                        completionHandler(status, addresses)
+                    })
+                }
+            }
+        }
+    }
+    
+    /// Geocodes the device's current IP address, converting IP address to partial address.
+    ///
+    /// - Parameters:
+    ///
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [IP Geocode](https://radar.io/documentation/api#ip-geocode).
+    public static func ipGeocode(completionHandler: @escaping RadarIPGeocodeCompletionHandler) {
+        RadarAPIClient.sharedInstance.ipGeocode { status, res, address, proxy in
+            RadarUtils.run(onMainThread: {
+                completionHandler(status, address, proxy)
+            })
+        }
+    }
     
     
+    /// Calculates the travel distance and duration from an origin to a destination.. If origin `nil`, the device's current location will be used.
+    ///
+    /// - Parameters:
+    ///
+    ///     - origin: The origin. If origin `nil`, the device's current location will be used.
+    ///     - destination: The destination.
+    ///     - modes: The travel modes.
+    ///     - units: The distance units.
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [Distance](https://radar.io/documentation/api#distance).
+    public static func getDistance(origin: CLLocation?, destination: CLLocation, modes: RadarRouteMode, units: RadarRouteUnits, completionHandler: @escaping RadarRouteCompletionHandler) {
+        if let origin = origin {
+            RadarAPIClient.sharedInstance.getDistance(origin: origin, destination: destination, modes: modes, units: units, geometryPoints: -1) { status, res, routes in
+                RadarUtils.run(onMainThread: {
+                    completionHandler(status, routes)
+                })
+            }
+        } else {
+            RadarLocationManager.sharedInstance.getLocation(){ status, location, stopped in
+                if status != .success {
+                    RadarUtils.run(onMainThread: {
+                        completionHandler(status, nil)
+                    })
+                    return
+                }
+                //TODO: CHECK RETURN AGAIN
+                guard let origin = location else {
+                    return
+                }
+                RadarAPIClient.sharedInstance.getDistance(origin: origin, destination: destination, modes: modes, units: units, geometryPoints: -1) { status, res, routes in
+                    RadarUtils.run(onMainThread: {
+                        completionHandler(status, routes)
+                    })
+                }
+            }
+        }
+    }
     
+    /// Calculates the travel distances and durations between multiple origins and destinations for up to 25 routes.
+    ///
+    /// - Parameters:
+    ///
+    ///     - origins: The origins.
+    ///     - destinations: The destinations.
+    ///     - mode: The travel mode.
+    ///     - units: The distance units.
+    ///     - completionHandler: A completion handler.
+    ///
+    /// See [Matrix](https://radar.io/documentation/api#matrix).
+    public static func getMatrix(origins: [CLLocation], destinations: [CLLocation], mode: RadarRouteMode, units: RadarRouteUnits, completionHandler: @escaping RadarRouteMatrixCompletionHandler) {
+        RadarAPIClient.sharedInstance.getMatrix(origins: origins, destinations: destinations, mode: mode, units: units) { status, res, matrix in
+            RadarUtils.run(onMainThread: {
+                completionHandler(status, matrix)
+            })
+        }
+    }
     
+    /// Sets the log level for debug logs.
+    ///
+    /// - Parameters:
+    ///
+    ///     - level: The log level.
+    public static func setLogLevel(_ level: RadarLogLevel) {
+        RadarSettings.setLogLevel(level)
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    /// Returns a display string for a status value.
+    ///
+    /// - Parameters:
+    ///
+    ///     - status: A status value.
+    ///
+    /// - Returns: A display string for the status value.
+    static func stringForStatus(_ status: RadarStatus) -> String {
+        switch status {
+        case .success:
+            return"SUCCESS"
+        case .errorPublishableKey:
+            return "ERROR_PUBLISHABLE_KEY"
+        case .errorPermissions:
+            return "ERROR_PERMISSIONS"
+        case .errorLocation:
+            return "ERROR_LOCATION"
+        case .errorBluetooth:
+            return "ERROR_BLUETOOTH"
+        case .errorNetwork:
+            return "ERROR_NETWORK"
+        case .errorBadRequest:
+            return "ERROR_BAD_REQUEST"
+        case .errorUnauthorized:
+            return "ERROR_UNAUTHORIZED"
+        case .errorPaymentRequired:
+            return "ERROR_PAYMENT_REQUIRED"
+        case .errorForbidden:
+            return "ERROR_FORBIDDEN"
+        case .errorRateLimit:
+            return "ERROR_RATE_LIMIT"
+        case .errorServer:
+            return "ERROR_SERVER"
+        default:
+            return "ERROR_UNKNOWN"
+        }
+    }
     
     /// Returns a display string for a location source value.
     ///
@@ -548,7 +953,6 @@ public class Radar {
             return "unknown"
         }
     }
-    
     
     @objc func applicationWillEnterForeground() {
         if RadarSettings.updateSessionId() {

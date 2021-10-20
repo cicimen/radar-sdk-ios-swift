@@ -10,7 +10,7 @@ import Foundation
 /// Represents routes between multiple origins and destinations.
 ///
 /// See [Matrix](https://radar.io/documentation/api#matrix).
-class RadarRouteMatrix {
+public class RadarRouteMatrix {
     
     /// Returns the route between the specified origin and destination.
     ///

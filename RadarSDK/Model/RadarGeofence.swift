@@ -11,7 +11,7 @@ import CoreLocation
 /// Represents a geofence.
 ///
 /// See [Geofences](https://radar.io/documentation/geofences).
-class RadarGeofence {
+public class RadarGeofence {
     
     /// The Radar ID of the geofence.
     private(set) var id = ""

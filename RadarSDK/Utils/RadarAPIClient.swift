@@ -543,7 +543,7 @@ class RadarAPIClient {
         
     }
     
-    func ipGeocode(with completionHandler: @escaping RadarIPGeocodeAPICompletionHandler) {
+    func ipGeocode(completionHandler: @escaping RadarIPGeocodeAPICompletionHandler) {
         
         guard let publishableKey = RadarSettings.publishableKey() else {
             return completionHandler(.errorPublishableKey, nil, nil, false)

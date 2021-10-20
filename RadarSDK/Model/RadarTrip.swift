@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 /// The statuses for trips.
-enum RadarTripStatus: Int {
+public enum RadarTripStatus: Int {
     /// Unknown
     case unknown
     /// `started`

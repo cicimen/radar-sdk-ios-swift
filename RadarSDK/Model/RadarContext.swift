@@ -11,7 +11,7 @@ import CoreLocation
 /// Represents the context for a location.
 ///
 /// See [Context](https://radar.io/documentation/api#context).
-class RadarContext {
+public class RadarContext {
     
     /// An array of the geofences for the location. May be empty if the location is not in any geofences.
     ///

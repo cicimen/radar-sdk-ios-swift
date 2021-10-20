@@ -23,7 +23,7 @@ enum RadarAddressConfidence : Int {
 /// Represents an address.
 ///
 /// See [Geocoding](https://radar.io/documentation/api#geocoding) .
-class RadarAddress {
+public class RadarAddress {
     
     //The location coordinate of the address.
     private(set) var coordinate: CLLocationCoordinate2D

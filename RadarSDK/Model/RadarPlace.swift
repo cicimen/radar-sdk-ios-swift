@@ -11,7 +11,7 @@ import CoreLocation
 /// Represents a place.
 ///
 /// See [Places](https://radar.io/documentation/places)
-class RadarPlace {
+public class RadarPlace {
     
     /// The Radar ID of the place.
     private(set) var id = ""
