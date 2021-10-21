@@ -72,7 +72,6 @@ public typealias RadarRouteMatrixCompletionHandler = (RadarStatus, RadarRouteMat
 public class Radar {
     
     private static let sharedInstance = Radar()
-    private weak var delegate: RadarDelegate?
     
     /// Initializes the Radar SDK.
     ///
