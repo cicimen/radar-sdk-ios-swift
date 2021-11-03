@@ -28,7 +28,7 @@ class RadarLocationManager: NSObject  {
     private var timer: Timer?
     private var completionHandlers: [RadarLocationCompletionHandler] = []
     private var nearbyBeaconIdentifers: Set<String> = []
-    private var queue = DispatchQueue(label: "io.radar.api.RadarLocationManager")
+    let lock: RadarReadWriteLock
     
     override init() {
         locationManager = CLLocationManager()
@@ -41,38 +41,43 @@ class RadarLocationManager: NSObject  {
         lowPowerLocationManager.allowsBackgroundLocationUpdates = RadarUtils.locationBackgroundMode()
         permissionsHelper = RadarPermissionsHelper()
         nearbyBeaconIdentifers = []
+        lock = RadarReadWriteLock(label: "RadarLocationManagerLock")
         super.init()
         locationManager.delegate = self
     }
     
     func callCompletionHandlers(status: RadarStatus, location: CLLocation?) {
-        queue.sync {
-            
+        
+        lock.read {
             if completionHandlers.count == 0 {
                 return
             }
-            
             RadarLogger.sharedInstance.log(level: .debug, message: String(format: "Calling completion handlers | self.completionHandlers.count = %lu", UInt(completionHandlers.count)))
-            
             for completionHandler in completionHandlers {
                 NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(timeoutWithCompletionHandler(completionHandler:)), object: completionHandler)
                 completionHandler(status, location, RadarState.stopped())
             }
-            
+        }
+        
+        lock.write {
             completionHandlers.removeAll()
         }
     }
     
     func addCompletionHandler(_ completionHandler: @escaping RadarLocationCompletionHandler) {
-        queue.sync {
+        lock.write {
             completionHandlers.append(completionHandler)
-            //TODO: CHECK PASSED PARAMETER completionHandler
-            perform(#selector(timeoutWithCompletionHandler(completionHandler:)), with: completionHandler, afterDelay: 20)
         }
+        //TODO: CHECK PASSED PARAMETER completionHandler
+        DispatchQueue.main.asyncAfter(deadline: .now() + 20) { [weak self, completionHandler] in
+            self?.timeoutWithCompletionHandler(completionHandler: completionHandler)
+        }
+        //TODO: CHECK PASSED PARAMETER completionHandler
+        //perform(#selector(timeoutWithCompletionHandler(completionHandler:)), with: completionHandler, afterDelay: 20)
     }
     
     func cancelTimeouts() {
-        queue.sync {
+        lock.read {
             for completionHandler in completionHandlers {
                 NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(timeoutWithCompletionHandler(completionHandler:)), object: completionHandler)
             }
@@ -80,10 +85,8 @@ class RadarLocationManager: NSObject  {
     }
     
     @objc public func timeoutWithCompletionHandler(completionHandler: @escaping RadarLocationCompletionHandler) {
-        queue.sync {
-            RadarLogger.sharedInstance.log(level: .debug, message: "Location timeout")
-            callCompletionHandlers(status: .errorLocation, location: nil)
-        }
+        RadarLogger.sharedInstance.log(level: .debug, message: "Location timeout")
+        callCompletionHandlers(status: .errorLocation, location: nil)
     }
     
     func getLocation(desiredAccuracy: RadarTrackingOptionsDesiredAccuracy = .medium, completionHandler: RadarLocationCompletionHandler?) {
@@ -157,7 +160,13 @@ class RadarLocationManager: NSObject  {
         if !sending {
             let delay: TimeInterval = RadarSettings.tracking() ? 10 : 0
             RadarLogger.sharedInstance.log(level: .debug, message: "Scheduling shutdown")
-            perform(#selector(shutDown), with: nil, afterDelay: delay)
+            
+            //TODO: CHECK PASSED PARAMETER completionHandler
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+                self?.shutDown()
+            }
+            
+            //perform(#selector(shutDown), with: nil, afterDelay: delay)
         }
     }
     
