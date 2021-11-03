@@ -44,9 +44,14 @@ class RadarAPIClient {
     
     func getConfig() {
         
-        guard let publishableKey = RadarSettings.publishableKey(), publishableKey.isEmpty else {
+        guard let publishableKey = RadarSettings.publishableKey()else {
             return
         }
+        if publishableKey.isEmpty {
+            return
+        }
+        
+        
         var queryString = ""
         queryString += "installId=\(RadarSettings.installId())"
         queryString += "&sessionId=\(RadarSettings.sessionId())"
@@ -65,7 +70,10 @@ class RadarAPIClient {
     
     func track(location: CLLocation, stopped: Bool, foreground: Bool, source: RadarLocationSource, replayed: Bool, nearbyBeacons: [String]?, completionHandler: @escaping RadarTrackAPICompletionHandler) {
         
-        guard let publishableKey = RadarSettings.publishableKey(), publishableKey.isEmpty else {
+        guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil, nil, nil)
         }
         
@@ -199,9 +207,13 @@ class RadarAPIClient {
     }
     
     func verifyEventId(eventId: String, verification: RadarEventVerification, verifiedPlaceId: String?) {
-        guard let publishableKey = RadarSettings.publishableKey() else {
+        guard let publishableKey = RadarSettings.publishableKey()else {
             return
         }
+        if publishableKey.isEmpty {
+            return
+        }
+        
         var params: [AnyHashable : Any] = [:]
         params["verification"] = NSNumber(value: verification.rawValue)
         
@@ -218,7 +230,10 @@ class RadarAPIClient {
     
     func updateTrip(options: RadarTripOptions?, status: RadarTripStatus, completionHandler: @escaping RadarTripAPICompletionHandler) {
         
-        guard let publishableKey = RadarSettings.publishableKey() else {
+        guard let publishableKey = RadarSettings.publishableKey()else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
         
@@ -270,8 +285,11 @@ class RadarAPIClient {
     }
     
     func getContext(location: CLLocation, completionHandler: @escaping RadarContextAPICompletionHandler) {
-        
-        guard let publishableKey = RadarSettings.publishableKey() else {
+
+        guard let publishableKey = RadarSettings.publishableKey()else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
         
@@ -299,8 +317,11 @@ class RadarAPIClient {
     }
     
     func searchPlaces(near: CLLocation, radius: Int, chains: [String]?, categories: [String]?, groups: [String]?, limit: Int, completionHandler: @escaping RadarSearchPlacesAPICompletionHandler) {
-        
+                
         guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
         
@@ -347,7 +368,10 @@ class RadarAPIClient {
     
     func searchGeofences(near: CLLocation, radius: Int, tags: [String]?, metadata: [AnyHashable : Any]?, limit: Int, completionHandler: @escaping RadarSearchGeofencesAPICompletionHandler) {
         
-        guard let publishableKey = RadarSettings.publishableKey() else {
+        guard let publishableKey = RadarSettings.publishableKey()else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
         
@@ -395,7 +419,10 @@ class RadarAPIClient {
     
     func searchBeacons(near: CLLocation, radius: Int, limit: Int, completionHandler: @escaping RadarSearchBeaconsAPICompletionHandler) {
         
-        guard let publishableKey = RadarSettings.publishableKey() else {
+        guard let publishableKey = RadarSettings.publishableKey()else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
         
@@ -433,6 +460,9 @@ class RadarAPIClient {
     func autocomplete(query: String, near: CLLocation?, layers: [String]?, limit: Int, country: String?, completionHandler: @escaping RadarGeocodeAPICompletionHandler) {
         
         guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
         
@@ -486,6 +516,9 @@ class RadarAPIClient {
         guard let publishableKey = RadarSettings.publishableKey() else {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
+        if publishableKey.isEmpty {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
         
         guard let urlString  = "\(RadarSettings.host())/v1/geocode/forward?query=\(query)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
             return //TODO: DO WE NEED TO CALL completionHandler
@@ -515,6 +548,9 @@ class RadarAPIClient {
     func reverseGeocode(location: CLLocation, completionHandler: @escaping RadarGeocodeAPICompletionHandler) {
         
         guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
         
@@ -548,6 +584,9 @@ class RadarAPIClient {
         guard let publishableKey = RadarSettings.publishableKey() else {
             return completionHandler(.errorPublishableKey, nil, nil, false)
         }
+        if publishableKey.isEmpty {
+            return completionHandler(.errorPublishableKey, nil, nil, false)
+        }
         
         apiHelper.request(method: "GET", url: "\(RadarSettings.host())/v1/geocode/ip", headers: RadarAPIClient.headers(withPublishableKey: publishableKey), params: nil, sleep: false) { status, res in
             
@@ -573,6 +612,9 @@ class RadarAPIClient {
     func getDistance(origin: CLLocation, destination: CLLocation, modes: RadarRouteMode, units: RadarRouteUnits, geometryPoints: Int, completionHandler: @escaping RadarDistanceAPICompletionHandler) {
         
         guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
         
@@ -638,6 +680,9 @@ class RadarAPIClient {
     func getMatrix(origins: [CLLocation], destinations: [CLLocation], mode: RadarRouteMode, units: RadarRouteUnits, completionHandler: @escaping RadarMatrixAPICompletionHandler) {
         
         guard let publishableKey = RadarSettings.publishableKey() else {
+            return completionHandler(.errorPublishableKey, nil, nil)
+        }
+        if publishableKey.isEmpty {
             return completionHandler(.errorPublishableKey, nil, nil)
         }
         

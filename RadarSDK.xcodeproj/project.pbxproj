@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		880552E62721EE4000C0E51F /* RadarReadWriteLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880552E52721EE4000C0E51F /* RadarReadWriteLock.swift */; };
 		880A56752715BB83006A8A34 /* RadarTripOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A56742715BB83006A8A34 /* RadarTripOptions.swift */; };
 		880A56772715C1C1006A8A34 /* RadarDelegateHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A56762715C1C1006A8A34 /* RadarDelegateHolder.swift */; };
 		880A56792715C73D006A8A34 /* RadarPermissionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A56782715C73D006A8A34 /* RadarPermissionsHelper.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		880552E52721EE4000C0E51F /* RadarReadWriteLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarReadWriteLock.swift; sourceTree = "<group>"; };
 		880A56742715BB83006A8A34 /* RadarTripOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarTripOptions.swift; sourceTree = "<group>"; };
 		880A56762715C1C1006A8A34 /* RadarDelegateHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarDelegateHolder.swift; sourceTree = "<group>"; };
 		880A56782715C73D006A8A34 /* RadarPermissionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarPermissionsHelper.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				880A56782715C73D006A8A34 /* RadarPermissionsHelper.swift */,
 				88426FBA271875F7006C3C5E /* RadarState.swift */,
 				8878716227149EE8007666E1 /* RadarUtils.swift */,
+				880552E52721EE4000C0E51F /* RadarReadWriteLock.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				8878715827148373007666E1 /* RadarRouteMode.swift in Sources */,
 				88E22B7027120535003997C1 /* RadarSDK.docc in Sources */,
 				880A56832715DBC6006A8A34 /* RadarUserInsightsState.swift in Sources */,
+				880552E62721EE4000C0E51F /* RadarReadWriteLock.swift in Sources */,
 				880A5693271626ED006A8A34 /* RadarGeofence.swift in Sources */,
 				8878716A2714BD34007666E1 /* RadarTrackingOptions.swift in Sources */,
 				88426FBB271875F7006C3C5E /* RadarState.swift in Sources */,
@@ -448,7 +452,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
