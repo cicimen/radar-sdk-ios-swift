@@ -841,7 +841,7 @@ public class Radar {
     ///     - status: A status value.
     ///
     /// - Returns: A display string for the status value.
-    static func stringForStatus(_ status: RadarStatus) -> String {
+    public static func stringForStatus(_ status: RadarStatus) -> String {
         switch status {
         case .success:
             return"SUCCESS"
@@ -878,7 +878,7 @@ public class Radar {
     ///     - source: A location source value.
     ///
     /// - Returns:A display string for the location source value.
-    static func stringForLocationSource(_ source: RadarLocationSource) -> String {
+    public static func stringForLocationSource(_ source: RadarLocationSource) -> String {
         switch source {
         case .foregroundLocation:
             return "FOREGROUND_LOCATION"
@@ -911,7 +911,7 @@ public class Radar {
     ///     - mode: A travel mode value.
     ///
     /// - Returns:A display string for the travel mode value.
-    static func stringForMode(_ mode: RadarRouteMode) -> String? {
+    public static func stringForMode(_ mode: RadarRouteMode) -> String? {
         switch mode {
         case .foot:
             return "foot"
@@ -934,7 +934,7 @@ public class Radar {
     ///     - status: A trip status value.
     ///
     /// - Returns:A display string for the trip status value.
-    static func stringForTripStatus(_ status: RadarTripStatus) -> String {
+    public static func stringForTripStatus(_ status: RadarTripStatus) -> String {
         switch status {
         case .started:
             return "started"
