@@ -146,7 +146,7 @@ public class RadarTrackingOptions {
     /// Updates about every 30 seconds while moving or stopped. Moderate battery usage. Shows the flashing blue status bar during tracking.
     ///
     /// See [Apple Docs](https://developer.apple.com/documentation/corelocation/cllocationmanager/2923541-showsbackgroundlocationindicator).
-    static let presetContinuous: RadarTrackingOptions = {
+    public static let presetContinuous: RadarTrackingOptions = {
         let options = RadarTrackingOptions()
         options.desiredStoppedUpdateInterval = 30
         options.desiredMovingUpdateInterval = 30
@@ -173,7 +173,7 @@ public class RadarTrackingOptions {
     /// Updates about every 2.5 minutes when moving and shuts down when stopped to save battery. Once stopped, the device will need to move more than 100 meters to wake up and start moving again. Low battery usage. Requires the `location` background mode.
     ///
     /// Note that location updates may be delayed significantly by Low Power Mode, or if the device has connectivity issues, low battery, or wi-fi disabled.
-    static let presetResponsive: RadarTrackingOptions = {
+    public static let presetResponsive: RadarTrackingOptions = {
         let options = RadarTrackingOptions()
         options.desiredStoppedUpdateInterval = 0
         options.desiredMovingUpdateInterval = 150
